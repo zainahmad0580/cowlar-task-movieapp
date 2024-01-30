@@ -30,9 +30,9 @@ class Utils {
             padding: EdgeInsets.all(size.width * 0.05),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: AppColors.white,
+              color: AppColors.bg,
             ),
-            child: const CircularProgressIndicator(color: AppColors.primary),
+            child: const CircularProgressIndicator(color: AppColors.btn),
           ));
         });
   }
