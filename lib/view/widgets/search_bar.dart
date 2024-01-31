@@ -3,14 +3,14 @@ import 'package:movieapp/provider/search_provider.dart';
 import 'package:movieapp/utils/app_colors.dart';
 import 'package:provider/provider.dart';
 
-class SearchBar extends StatefulWidget {
-  const SearchBar({super.key});
+class SearchField extends StatefulWidget {
+  const SearchField({super.key});
 
   @override
-  State<SearchBar> createState() => _SearchBarState();
+  State<SearchField> createState() => _SearchFieldState();
 }
 
-class _SearchBarState extends State<SearchBar> {
+class _SearchFieldState extends State<SearchField> {
   final TextEditingController _searchController = TextEditingController();
 
   @override
@@ -33,7 +33,7 @@ class _SearchBarState extends State<SearchBar> {
                 ? Icon(
                     Icons.search,
                     color: AppColors.black,
-                    size: size.width * 0.1,
+                    size: size.width * 0.075,
                   )
                 : IconButton(
                     onPressed: () {
@@ -43,7 +43,7 @@ class _SearchBarState extends State<SearchBar> {
                     icon: Icon(
                       Icons.clear,
                       color: AppColors.black,
-                      size: size.width * 0.1,
+                      size: size.width * 0.075,
                     )),
             hintText: 'TV shows, movies and more'),
         onChanged: (query) => value.setQuery(query),

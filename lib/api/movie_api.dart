@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:movieapp/api/api_endpoints.dart';
 import 'dart:convert';
@@ -7,7 +8,7 @@ import 'package:movieapp/model/movie_model.dart';
 import 'package:movieapp/utils/utils.dart';
 
 class MovieApi {
-  static Future<List<MovieModel>> getAllMovies() async {
+  static Future<List<MovieModel>> getAllMovies(BuildContext context) async {
     List<MovieModel> movies = [];
     try {
       final response = await http.get(Uri.parse(ApiEndpoints.upcoming));
@@ -21,7 +22,7 @@ class MovieApi {
         if (isError != null) {
           String message = responseData['message'];
           if (isError) {
-            Utils.toastMessage(msg: message);
+            Utils.snackBarMsg(context, msg: message);
           } else {
             final data = responseData['data'];
             for (var movie in data) {
@@ -30,10 +31,10 @@ class MovieApi {
             }
           }
         } else {
-          Utils.toastMessage();
+          Utils.snackBarMsg(context);
         }
       } else {
-        Utils.toastMessage();
+        Utils.snackBarMsg(context);
       }
     } catch (e) {
       log(e.toString());
