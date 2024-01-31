@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movieapp/api/movie_api.dart';
 import 'package:movieapp/model/movie_model.dart';
-import 'package:movieapp/utils/app_colors.dart';
 import 'package:movieapp/view/screens/home/widgets/home_app_bar.dart';
 import 'package:movieapp/view/screens/movie/widgets/movie_card.dart';
 
@@ -13,12 +12,10 @@ class HomeScreen extends StatelessWidget {
     var size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: const HomeAppBar(),
-        backgroundColor: AppColors.lightGreyBg,
         body: Padding(
           padding: EdgeInsets.symmetric(
               horizontal: size.width * 0.03, vertical: size.height * 0.03),
           child: Column(children: [
-            // const SearchField(),
             FutureBuilder(
                 future: MovieApi.getAllMovies(context),
                 builder: (context, snapshot) {

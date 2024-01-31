@@ -26,12 +26,20 @@ class _SearchFieldState extends State<SearchField> {
       return TextField(
         controller: _searchController,
         decoration: InputDecoration(
+            filled: true,
+            fillColor: AppColors.grey,
             contentPadding: const EdgeInsets.all(15),
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+            border: OutlineInputBorder(
+                borderSide: BorderSide.none,
+                borderRadius: BorderRadius.circular(40.0)),
+            prefixIcon: Icon(
+              Icons.search,
+              color: AppColors.black,
+              size: size.width * 0.075,
+            ),
             suffixIcon: value.query == ''
                 ? Icon(
-                    Icons.search,
+                    Icons.clear,
                     color: AppColors.black,
                     size: size.width * 0.075,
                   )

@@ -36,7 +36,7 @@ class OutlinedIconButton extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(iconData, color: AppColors.bg),
+              Icon(iconData, color: AppColors.white),
               SizedBox(width: size.width * 0.02),
               Text(title, style: textStyle),
             ],

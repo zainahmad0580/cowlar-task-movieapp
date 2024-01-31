@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'Movie App',
           theme: ThemeData(
-              scaffoldBackgroundColor: AppColors.bg,
+              scaffoldBackgroundColor: AppColors.lightGreyBg,
               inputDecorationTheme: InputDecorationTheme(
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10))),

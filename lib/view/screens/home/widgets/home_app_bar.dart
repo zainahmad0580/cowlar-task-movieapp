@@ -10,7 +10,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       title: const Text('Watch', style: ThemeText.appBarBlack),
-      backgroundColor: AppColors.bg,
+      backgroundColor: AppColors.white,
       foregroundColor: AppColors.black,
       actions: [
         IconButton(

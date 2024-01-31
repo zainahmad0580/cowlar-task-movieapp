@@ -17,7 +17,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             onPressed: () => Navigator.pop(context),
             icon: const Icon(
               Icons.arrow_back_ios,
-              color: AppColors.bg,
+              color: AppColors.white,
             )),
         title: Text(title, style: ThemeText.appBarWhite));
   }

@@ -66,7 +66,7 @@ class MovieDetailScreen extends StatelessWidget {
                       child: Container(
                         padding: EdgeInsets.all(size.height * 0.04),
                         width: double.infinity,
-                        color: AppColors.bg,
+                        color: AppColors.white,
                         child: SingleChildScrollView(
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,

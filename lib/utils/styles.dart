@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'app_colors.dart';
 
 abstract class ThemeText {
-  static const TextStyle primaryText =
-      TextStyle(color: AppColors.bg, fontSize: 20, fontWeight: FontWeight.w700);
+  static const TextStyle primaryText = TextStyle(
+      color: AppColors.white, fontSize: 20, fontWeight: FontWeight.w700);
 
   static const TextStyle locationText =
       TextStyle(color: AppColors.black, fontSize: 14);
   static const TextStyle iconBtnText = TextStyle(
       color: AppColors.black, fontSize: 16, fontWeight: FontWeight.bold);
-  static const TextStyle headingText =
-      TextStyle(color: AppColors.bg, fontSize: 26, fontWeight: FontWeight.w700);
-  static const TextStyle headingText20 =
-      TextStyle(color: AppColors.bg, fontSize: 20, fontWeight: FontWeight.w700);
+  static const TextStyle headingText = TextStyle(
+      color: AppColors.white, fontSize: 26, fontWeight: FontWeight.w700);
+  static const TextStyle headingText20 = TextStyle(
+      color: AppColors.white, fontSize: 20, fontWeight: FontWeight.w700);
 
   static const TextStyle subtitleText = TextStyle(
       color: AppColors.black, fontSize: 14, fontWeight: FontWeight.w500);
@@ -23,8 +23,8 @@ abstract class ThemeText {
   static const TextStyle cardBoldText = TextStyle(
       color: AppColors.black, fontSize: 14, fontWeight: FontWeight.w500);
 
-  static const TextStyle appBarWhite =
-      TextStyle(fontSize: 24, fontWeight: FontWeight.w500, color: AppColors.bg);
+  static const TextStyle appBarWhite = TextStyle(
+      fontSize: 24, fontWeight: FontWeight.w500, color: AppColors.white);
   static const TextStyle appBarBlack = TextStyle(
       fontSize: 24, fontWeight: FontWeight.w500, color: AppColors.black);
 
@@ -33,8 +33,8 @@ abstract class ThemeText {
   static const TextStyle title = TextStyle(
       color: AppColors.black, fontSize: 16, fontWeight: FontWeight.w600);
 
-  static const TextStyle btnText =
-      TextStyle(color: AppColors.bg, fontSize: 18, fontWeight: FontWeight.w600);
+  static const TextStyle btnText = TextStyle(
+      color: AppColors.white, fontSize: 18, fontWeight: FontWeight.w600);
 
   static const TextStyle iconButton = TextStyle(
       color: AppColors.black, fontSize: 16, fontWeight: FontWeight.w500);
@@ -43,11 +43,11 @@ abstract class ThemeText {
     fontSize: 16,
   );
 
-  static const TextStyle userText =
-      TextStyle(color: AppColors.bg, fontSize: 19, fontWeight: FontWeight.bold);
+  static const TextStyle userText = TextStyle(
+      color: AppColors.white, fontSize: 19, fontWeight: FontWeight.bold);
 
-  static const TextStyle smallBtn =
-      TextStyle(color: AppColors.bg, fontSize: 14, fontWeight: FontWeight.w600);
+  static const TextStyle smallBtn = TextStyle(
+      color: AppColors.white, fontSize: 14, fontWeight: FontWeight.w600);
   static const TextStyle skipButton = TextStyle(
       color: AppColors.black, fontSize: 17, fontWeight: FontWeight.w500);
 
