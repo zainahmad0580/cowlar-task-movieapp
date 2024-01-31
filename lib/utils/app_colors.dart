@@ -9,5 +9,6 @@ class AppColors {
   static const navbar = Color(0xFF2E2739);
   static const bg = Color(0xFFFFFFFF);
   static const grey = Color(0xFFEFEFEF);
+  static const lightGreyBg = Color(0xFFDBDBDF);
   static const black = Color(0xFF000000);
 }

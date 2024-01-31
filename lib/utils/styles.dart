@@ -14,9 +14,6 @@ abstract class ThemeText {
   static const TextStyle headingText20 =
       TextStyle(color: AppColors.bg, fontSize: 20, fontWeight: FontWeight.w700);
 
-  static const TextStyle eventDetailsText = TextStyle(
-      color: AppColors.black, fontSize: 16, fontWeight: FontWeight.w400);
-
   static const TextStyle deadlineText =
       TextStyle(color: AppColors.bg, fontSize: 16, fontWeight: FontWeight.w600);
 
@@ -26,17 +23,12 @@ abstract class ThemeText {
   static const TextStyle subtitleTextGrey = TextStyle(
       color: AppColors.grey, fontSize: 14, fontWeight: FontWeight.w500);
 
-  static const TextStyle halaqahCardText = TextStyle(
-    color: AppColors.black,
-    fontSize: 16,
-  );
-
   static const TextStyle cardBoldText = TextStyle(
       color: AppColors.black, fontSize: 14, fontWeight: FontWeight.w500);
 
-  static const TextStyle appBarText =
+  static const TextStyle appBarWhite =
       TextStyle(fontSize: 24, fontWeight: FontWeight.w500, color: AppColors.bg);
-  static const TextStyle calendarTitleText = TextStyle(
+  static const TextStyle appBarBlack = TextStyle(
       fontSize: 24, fontWeight: FontWeight.w500, color: AppColors.black);
 
   static const TextStyle boldText = TextStyle(

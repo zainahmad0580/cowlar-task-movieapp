@@ -15,15 +15,15 @@ class MovieApi {
           .replace(queryParameters: {'api_key': apiKey});
       final response = await http.get(uri);
 
-      log('Status code: ${response.statusCode}');
+      //log('Status code: ${response.statusCode}');
       final responseData = jsonDecode(response.body);
       if (response.statusCode == 200) {
-        log(responseData.toString());
+        // log(responseData.toString());
 
         final data = responseData['results'];
         for (var movie in data) {
           movies.add(MovieModel.fromJson(movie));
-          log(movies.toString());
+          // log(movies.toString());
         }
       } else if (response.statusCode == 401) {
         String? message = responseData['status_message'];
