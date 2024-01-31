@@ -14,14 +14,11 @@ abstract class ThemeText {
   static const TextStyle headingText20 =
       TextStyle(color: AppColors.bg, fontSize: 20, fontWeight: FontWeight.w700);
 
-  static const TextStyle deadlineText =
-      TextStyle(color: AppColors.bg, fontSize: 16, fontWeight: FontWeight.w600);
-
   static const TextStyle subtitleText = TextStyle(
       color: AppColors.black, fontSize: 14, fontWeight: FontWeight.w500);
 
   static const TextStyle subtitleTextGrey = TextStyle(
-      color: AppColors.grey, fontSize: 14, fontWeight: FontWeight.w500);
+      color: AppColors.greyText, fontSize: 14, fontWeight: FontWeight.w300);
 
   static const TextStyle cardBoldText = TextStyle(
       color: AppColors.black, fontSize: 14, fontWeight: FontWeight.w500);
@@ -37,7 +34,7 @@ abstract class ThemeText {
       color: AppColors.black, fontSize: 16, fontWeight: FontWeight.w600);
 
   static const TextStyle btnText =
-      TextStyle(color: AppColors.bg, fontSize: 16, fontWeight: FontWeight.w600);
+      TextStyle(color: AppColors.bg, fontSize: 18, fontWeight: FontWeight.w600);
 
   static const TextStyle iconButton = TextStyle(
       color: AppColors.black, fontSize: 16, fontWeight: FontWeight.w500);

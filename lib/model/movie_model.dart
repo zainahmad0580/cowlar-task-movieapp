@@ -31,6 +31,7 @@ class MovieModel {
       this.voteCount});
 
   MovieModel.fromJson(Map<String, dynamic> json) {
+    //To handle null check error give a value if null value comes from api
     adult = json['adult'];
     backdropPath = json['backdrop_path'] ?? '';
     genreIds = json['genre_ids'].cast<int>() ?? [];
