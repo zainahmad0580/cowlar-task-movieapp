@@ -110,5 +110,27 @@ class MovieDetailsClass extends MovieModel {
     voteAverage = json['vote_average'];
     voteCount = json['vote_count'];
   }
-  //NO NEED OF TOJSON FUNCTION AS WE ARE NOT POSTING DATA
+  @override
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data =
+        super.toJson(); // Include base class fields
+
+    data['belongs_to_collection'] = belongsToCollection;
+    data['budget'] = budget;
+    data['genres'] = genres?.map((genre) => genre.toJson()).toList();
+    data['homepage'] = homepage;
+    data['imdb_id'] = imdbId;
+    data['production_companies'] =
+        productionCompanies?.map((company) => company.toJson()).toList();
+    data['production_countries'] =
+        productionCountries?.map((country) => country.toJson()).toList();
+    data['revenue'] = revenue;
+    data['runtime'] = runtime;
+    data['spoken_languages'] =
+        spokenLanguages?.map((language) => language.toJson()).toList();
+    data['status'] = status;
+    data['tagline'] = tagline;
+
+    return data;
+  }
 }

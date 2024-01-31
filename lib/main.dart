@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movieapp/provider/navbar_provider.dart';
 import 'package:movieapp/provider/search_provider.dart';
 import 'package:movieapp/routes/routes.dart';
 import 'package:movieapp/utils/app_colors.dart';
@@ -16,7 +17,10 @@ class MyApp extends StatelessWidget {
     return GestureDetector(
       onTap: (() => FocusScope.of(context).requestFocus(FocusNode())),
       child: MultiProvider(
-        providers: [ChangeNotifierProvider(create: (_) => SearchProvider())],
+        providers: [
+          ChangeNotifierProvider(create: (_) => SearchProvider()),
+          ChangeNotifierProvider(create: (_) => NavBarProvider())
+        ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'Movie App',
