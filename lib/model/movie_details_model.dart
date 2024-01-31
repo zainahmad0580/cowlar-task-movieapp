@@ -4,7 +4,7 @@ import 'production_companies_model.dart';
 import 'production_countries_model.dart';
 import 'spoken_languages_model.dart';
 
-class MovieDetailsClass extends MovieModel {
+class MovieDetailsModel extends MovieModel {
   String? belongsToCollection;
   int? budget;
   List<GenreModel>? genres;
@@ -18,7 +18,7 @@ class MovieDetailsClass extends MovieModel {
   String? status;
   String? tagline;
 
-  MovieDetailsClass({
+  MovieDetailsModel({
     this.belongsToCollection,
     this.budget,
     this.genres,
@@ -63,7 +63,7 @@ class MovieDetailsClass extends MovieModel {
           voteCount: voteCount,
         );
 
-  MovieDetailsClass.fromJson(Map<String, dynamic> json) {
+  MovieDetailsModel.fromJson(Map<String, dynamic> json) {
     adult = json['adult'];
     backdropPath = json['backdrop_path'];
     belongsToCollection = json['belongs_to_collection'];

@@ -26,8 +26,7 @@ class HomeScreen extends StatelessWidget {
                     return SizedBox(
                         height: size.width * 0.1,
                         width: size.width * 0.1,
-                        child: const CircularProgressIndicator(
-                            color: AppColors.btn));
+                        child: const CircularProgressIndicator());
                   } else if (snapshot.hasError) {
                     return const Icon(Icons.error);
                   } else {

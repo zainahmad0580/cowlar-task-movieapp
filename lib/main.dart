@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10))),
               listTileTheme: const ListTileThemeData(horizontalTitleGap: 4),
-              colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+              colorScheme: ColorScheme.fromSeed(seedColor: AppColors.btn),
               useMaterial3: true,
               fontFamily: "Poppins"),
           onGenerateRoute: Routes.generateRoute,

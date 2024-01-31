@@ -46,8 +46,8 @@ abstract class ThemeText {
   static const TextStyle userText =
       TextStyle(color: AppColors.bg, fontSize: 19, fontWeight: FontWeight.bold);
 
-  static const TextStyle textButton = TextStyle(
-      color: AppColors.black, fontSize: 16, fontStyle: FontStyle.italic);
+  static const TextStyle smallBtn =
+      TextStyle(color: AppColors.bg, fontSize: 14, fontWeight: FontWeight.w600);
   static const TextStyle skipButton = TextStyle(
       color: AppColors.black, fontSize: 17, fontWeight: FontWeight.w500);
 
