@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:movieapp/provider/search_provider.dart';
 import 'package:movieapp/routes/routes.dart';
+import 'package:movieapp/utils/app_colors.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,13 +13,25 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Movie App',
-      theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-          fontFamily: "Poppins"),
-      onGenerateRoute: Routes.generateRoute,
+    return GestureDetector(
+      onTap: (() => FocusScope.of(context).requestFocus(FocusNode())),
+      child: MultiProvider(
+        providers: [ChangeNotifierProvider(create: (_) => SearchProvider())],
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Movie App',
+          theme: ThemeData(
+              scaffoldBackgroundColor: AppColors.bg,
+              inputDecorationTheme: InputDecorationTheme(
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10))),
+              listTileTheme: const ListTileThemeData(horizontalTitleGap: 4),
+              colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+              useMaterial3: true,
+              fontFamily: "Poppins"),
+          onGenerateRoute: Routes.generateRoute,
+        ),
+      ),
     );
   }
 }
