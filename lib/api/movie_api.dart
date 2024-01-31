@@ -12,7 +12,7 @@ class MovieApi {
   static Future<List<MovieModel>> getAllMovies(BuildContext context) async {
     List<MovieModel> movies = [];
     try {
-      final uri = Uri.parse(ApiEndpoints.upcoming)
+      final uri = Uri.parse(ApiEndpoints.moviesList)
           .replace(queryParameters: {'api_key': apiKey});
       final response = await http.get(uri);
 
@@ -41,7 +41,7 @@ class MovieApi {
       BuildContext context, int movieId) async {
     MovieDetailsModel? movieDetailsModel;
     try {
-      final uri = Uri.parse('${ApiEndpoints.baseUrl}/$movieId')
+      final uri = Uri.parse('${ApiEndpoints.movieDetails}/$movieId')
           .replace(queryParameters: {'api_key': apiKey});
       final response = await http.get(uri);
 

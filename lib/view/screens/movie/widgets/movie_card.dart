@@ -28,8 +28,12 @@ class MovieCard extends StatelessWidget {
                 fit: BoxFit.cover)),
         child: Align(
             alignment: Alignment.bottomLeft,
-            child:
-                Text(movieModel.originalTitle!, style: ThemeText.headingText)),
+            child: Text(
+              movieModel.originalTitle!,
+              style: ThemeText.headingText,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+            )),
       ),
     );
   }

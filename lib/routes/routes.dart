@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:movieapp/model/movie_model.dart';
 import 'package:movieapp/routes/route_names.dart';
 import 'package:movieapp/view/screens/home/screens/home_screen.dart';
-import 'package:movieapp/view/screens/movie/screens/genre_list_screen.dart';
+import 'package:movieapp/view/screens/genre/screens/genre_list_screen.dart';
 import 'package:movieapp/view/screens/movie/screens/movie_detail_screen.dart';
 import 'package:movieapp/view/screens/movie/screens/movie_list_screen.dart';
 import 'package:movieapp/view/splash_screen.dart';

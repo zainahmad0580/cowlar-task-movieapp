@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movieapp/provider/search_provider.dart';
 import 'package:movieapp/utils/app_colors.dart';
+import 'package:movieapp/utils/styles.dart';
 import 'package:provider/provider.dart';
 
 class SearchField extends StatefulWidget {
@@ -22,40 +23,44 @@ class _SearchFieldState extends State<SearchField> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return Consumer<SearchProvider>(builder: ((context, value, child) {
-      return TextField(
-        controller: _searchController,
-        decoration: InputDecoration(
-            filled: true,
-            fillColor: AppColors.grey,
-            contentPadding: const EdgeInsets.all(15),
-            border: OutlineInputBorder(
-                borderSide: BorderSide.none,
-                borderRadius: BorderRadius.circular(40.0)),
-            prefixIcon: Icon(
-              Icons.search,
-              color: AppColors.black,
-              size: size.width * 0.075,
-            ),
-            suffixIcon: value.query == ''
-                ? Icon(
-                    Icons.clear,
-                    color: AppColors.black,
-                    size: size.width * 0.075,
-                  )
-                : IconButton(
-                    onPressed: () {
-                      _searchController.clear();
-                      value.clearQuery();
-                    },
-                    icon: Icon(
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: size.width * 0.04),
+      child: Consumer<SearchProvider>(builder: ((context, value, child) {
+        return TextField(
+          controller: _searchController,
+          decoration: InputDecoration(
+              filled: true,
+              fillColor: AppColors.lightGreyBg,
+              contentPadding: const EdgeInsets.all(15),
+              border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(40.0)),
+              prefixIcon: Icon(
+                Icons.search,
+                color: AppColors.black,
+                size: size.width * 0.075,
+              ),
+              suffixIcon: value.query == ''
+                  ? Icon(
                       Icons.clear,
                       color: AppColors.black,
                       size: size.width * 0.075,
-                    )),
-            hintText: 'TV shows, movies and more'),
-        onChanged: (query) => value.setQuery(query),
-      );
-    }));
+                    )
+                  : IconButton(
+                      onPressed: () {
+                        _searchController.clear();
+                        value.clearQuery();
+                      },
+                      icon: Icon(
+                        Icons.clear,
+                        color: AppColors.black,
+                        size: size.width * 0.075,
+                      )),
+              hintStyle: ThemeText.subtitleTextGrey,
+              hintText: 'TV shows, movies and more'),
+          onChanged: (query) => value.setQuery(query),
+        );
+      })),
+    );
   }
 }

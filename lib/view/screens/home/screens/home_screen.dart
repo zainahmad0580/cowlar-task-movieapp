@@ -35,6 +35,8 @@ class HomeScreen extends StatelessWidget {
 
                     return Expanded(
                       child: ListView.builder(
+                          physics: const BouncingScrollPhysics(),
+                          shrinkWrap: true,
                           itemCount: movies.length,
                           itemBuilder: ((context, index) {
                             final movie = movies[index];
