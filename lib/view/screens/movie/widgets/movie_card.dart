@@ -15,8 +15,10 @@ class MovieCard extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           image: DecorationImage(
-              image: NetworkImage(
-                  ApiEndpoints.storageUrlw500 + movieModel.backdropPath!))),
+            image: NetworkImage(
+                ApiEndpoints.storageUrlw500 + movieModel.backdropPath!),
+            onError: (exception, stackTrace) => const Icon(Icons.error),
+          )),
       child: Align(
           alignment: Alignment.bottomLeft,
           child: Text(movieModel.originalTitle!)),
