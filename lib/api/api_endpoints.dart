@@ -6,8 +6,8 @@ class ApiEndpoints {
       'https://image.tmdb.org/t/p/original';
 
   //================MOVIES================
-  static const String upcoming = '$baseUrl/upcoming';
-  static const String register = '$baseUrl/register';
-  static const String resendEmail = '$baseUrl/email/verification-notification';
-  static const String googleSignUp = '$baseUrl/auth/google/signin';
+  static const String upcoming = '$baseUrl/upcoming'; //List of movies
+  //movieDetails = baseUrl/<movie-id>
+  //getImages = baseUrl/<movie-id>/images
+  //singleImage = 'storageUrl/file_path
 }
