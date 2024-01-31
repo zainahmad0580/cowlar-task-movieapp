@@ -28,7 +28,7 @@ class GenreApi {
       } else if (response.statusCode == 401) {
         String? message = responseData['status_message'];
         //To handle if status_message comes null from api
-        Utils.snackBarMsg(context, msg: message ?? 'Unauthorized access');
+        Utils.toastMessage(msg: message ?? 'Unauthorized access');
       }
     } catch (e) {
       log(e.toString());
