@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:movieapp/provider/genre_provider.dart';
 import 'package:movieapp/routes/route_names.dart';
-import 'package:movieapp/utils/app_colors.dart';
+import 'package:movieapp/utils/app_assets.dart';
+import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -27,6 +29,8 @@ class _SplashScreenState extends State<SplashScreen>
     super.initState();
 
     Timer(const Duration(seconds: 3), () async {
+      //To set genres
+      Provider.of<GenreProvider>(context, listen: false).setGenres();
       Navigator.pushNamedAndRemoveUntil(
           context, RouteNames.home, (route) => false);
     });
@@ -40,12 +44,16 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
-        backgroundColor: AppColors.white,
         body: Center(
             child: ScaleTransition(
                 scale: _animation,
-                child: const Padding(
-                    padding: EdgeInsets.all(8.0), child: Text('Movie App')))));
+                child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SizedBox(
+                        width: size.width * 0.3,
+                        height: size.width * 0.3,
+                        child: Image.asset(AppAssets.logo))))));
   }
 }

@@ -45,6 +45,7 @@ class _VideoScreenState extends State<VideoScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // var size = MediaQuery.of(context).size;
     return YoutubePlayerBuilder(
       player: YoutubePlayer(
           controller: _controller,

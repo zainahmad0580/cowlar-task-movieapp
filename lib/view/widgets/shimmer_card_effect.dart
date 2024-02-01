@@ -7,6 +7,7 @@ class ShimmerCardEffect extends StatelessWidget {
   final double height;
   final double width;
   final int items;
+  //Can be used as listview or gridview
   final bool isList;
   const ShimmerCardEffect(
       {super.key,

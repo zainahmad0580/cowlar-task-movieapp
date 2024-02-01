@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movieapp/provider/genre_provider.dart';
 import 'package:movieapp/provider/navbar_provider.dart';
 import 'package:movieapp/provider/search_provider.dart';
 import 'package:movieapp/provider/video_provider.dart';
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
       onTap: (() => FocusScope.of(context).requestFocus(FocusNode())),
       child: MultiProvider(
         providers: [
+          ChangeNotifierProvider(create: (_) => GenreProvider()),
           ChangeNotifierProvider(create: (_) => SearchProvider()),
           ChangeNotifierProvider(create: (_) => NavBarProvider()),
           ChangeNotifierProvider(create: (_) => VideoProvider())
@@ -31,7 +33,6 @@ class MyApp extends StatelessWidget {
               inputDecorationTheme: InputDecorationTheme(
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10))),
-              listTileTheme: const ListTileThemeData(horizontalTitleGap: 4),
               colorScheme: ColorScheme.fromSeed(seedColor: AppColors.btn),
               useMaterial3: true,
               fontFamily: "Poppins"),

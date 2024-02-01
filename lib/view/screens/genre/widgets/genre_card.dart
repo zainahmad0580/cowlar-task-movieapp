@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movieapp/model/genre_model.dart';
+import 'package:movieapp/utils/app_assets.dart';
 import 'package:movieapp/utils/styles.dart';
 
 class GenreCard extends StatelessWidget {
@@ -14,7 +15,7 @@ class GenreCard extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           image: DecorationImage(
-              image: const AssetImage('assets/images/movie.png'),
+              image: const AssetImage(AppAssets.movie),
               onError: (exception, stackTrace) => const Icon(Icons.error),
               fit: BoxFit.cover)),
       child: Align(

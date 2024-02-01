@@ -7,7 +7,8 @@ class ApiEndpoints {
 
   //================MOVIES================
   static const String moviesList = '$baseUrl/movie/upcoming'; //List of movies
-  static const String movieUrl = '$baseUrl/movie'; //List of movies
+  static const String movieUrl = '$baseUrl/movie';
+  static const String searchMovie = '$baseUrl/search/movie';
   //movieDetails = baseUrl/<movie-id>
   //getImages = baseUrl/<movie-id>/images
   //singleImage = 'storageUrl/file_path
