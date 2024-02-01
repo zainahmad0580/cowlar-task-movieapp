@@ -17,6 +17,7 @@ class SearchProvider with ChangeNotifier {
 
   void clearQuery() {
     _query = '';
+    _searchedMovies = [];
     notifyListeners();
   }
 }
