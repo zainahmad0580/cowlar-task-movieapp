@@ -39,7 +39,7 @@ class MovieApi {
   static Future<MovieDetailsModel?> getMovieDetails(int movieId) async {
     MovieDetailsModel? movieDetailsModel;
     try {
-      final uri = Uri.parse('${ApiEndpoints.movieDetails}/$movieId')
+      final uri = Uri.parse('${ApiEndpoints.movieUrl}/$movieId')
           .replace(queryParameters: {'api_key': apiKey});
       final response = await http.get(uri);
 
