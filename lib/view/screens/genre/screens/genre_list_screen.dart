@@ -9,7 +9,7 @@ import 'package:movieapp/view/screens/genre/widgets/searched_movies.dart';
 import 'package:movieapp/view/screens/media_library/media_library_screen.dart';
 import 'package:movieapp/view/screens/more/more_screen.dart';
 import 'package:movieapp/view/widgets/custom_navbar.dart';
-import 'package:movieapp/view/widgets/search_field.dart';
+import 'package:movieapp/view/screens/genre/widgets/search_field.dart';
 import 'package:provider/provider.dart';
 
 class GenreListScreen extends StatelessWidget {

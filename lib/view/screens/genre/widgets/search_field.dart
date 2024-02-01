@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:movieapp/provider/search_provider.dart';
 import 'package:movieapp/routes/route_names.dart';
@@ -64,11 +62,13 @@ class _SearchFieldState extends State<SearchField> {
           onChanged: (query) async => await value.setQuery(query),
           onEditingComplete: () {
             if (value.query.isNotEmpty) {
-              log('Navigate');
-              Navigator.pushNamed(context, RouteNames.searchResult,
-                  arguments: value.searchedMovies.length);
-            } else {
-              log('Dont');
+              //Remove current route from the stack so that we go back to home if back pressed from results screen
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                RouteNames.searchResult,
+                (route) => route.isFirst,
+                arguments: value.searchedMovies.length,
+              );
             }
           },
         );

@@ -48,7 +48,9 @@ class SearchedMovieListTile extends StatelessWidget {
                           .firstWhere((genre) => genre.id == genreIds.first);
 
                       return Text(genre.name ?? '',
-                          style: ThemeText.subtitleTextGrey);
+                          style: ThemeText.subtitleTextGrey,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis);
                     })
                   : null,
               trailing: Icon(
