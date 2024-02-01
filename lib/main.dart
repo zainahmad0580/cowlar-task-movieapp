@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:movieapp/provider/genre_provider.dart';
 import 'package:movieapp/provider/navbar_provider.dart';
 import 'package:movieapp/provider/search_provider.dart';
@@ -7,7 +8,8 @@ import 'package:movieapp/routes/routes.dart';
 import 'package:movieapp/utils/app_colors.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  await dotenv.load(fileName: ".env");
   runApp(const MyApp());
 }
 

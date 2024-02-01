@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:movieapp/utils/app_colors.dart';
 
 const String youtubeUrl = 'https://www.youtube.com/watch?v=';
-const String videoKey = 'hWbfohXIdEU';
-const String apiKey = 'd7a57f17b08888d18a038ec00257c608';
+String apiKey = dotenv.get('API_KEY', fallback: '');
 
 const Map<String, Color> genreColors = {
   'Action': AppColors.genreTeal,

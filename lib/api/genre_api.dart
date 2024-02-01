@@ -1,9 +1,9 @@
 import 'package:http/http.dart' as http;
 import 'package:movieapp/api/api_endpoints.dart';
 import 'package:movieapp/model/genre_model.dart';
+import 'package:movieapp/utils/constants.dart';
 import 'dart:convert';
 import 'dart:developer';
-import 'package:movieapp/utils/constants.dart';
 import 'package:movieapp/utils/utils.dart';
 
 class GenreApi {
