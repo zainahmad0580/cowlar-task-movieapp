@@ -5,6 +5,6 @@ class MoreScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text('More');
+    return const Center(child: Text('More'));
   }
 }

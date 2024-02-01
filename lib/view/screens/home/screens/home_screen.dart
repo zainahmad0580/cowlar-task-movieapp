@@ -27,37 +27,36 @@ class HomeScreen extends StatelessWidget {
             return IndexedStack(index: value.index, children: [
               const DashboardScreen(),
               Column(children: [
-                Text('Hi')
-                // Expanded(
-                //   child: FutureBuilder(
-                //       future: MovieApi.getAllMovies(context),
-                //       builder: (context, snapshot) {
-                //         if (snapshot.connectionState ==
-                //             ConnectionState.waiting) {
-                //           return ShimmerCardEffect(
-                //               items: 4,
-                //               height: size.height * 0.25,
-                //               width: size.width * 0.9);
-                //         } else if (snapshot.hasError) {
-                //           return const Icon(Icons.error);
-                //         } else {
-                //           List<MovieModel> movies = snapshot.data ?? [];
+                Expanded(
+                  child: FutureBuilder(
+                      future: MovieApi.getAllMovies(context),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return ShimmerCardEffect(
+                              items: 4,
+                              height: size.height * 0.25,
+                              width: size.width * 0.9);
+                        } else if (snapshot.hasError) {
+                          return const Icon(Icons.error);
+                        } else {
+                          List<MovieModel> movies = snapshot.data ?? [];
 
-                //           if (movies.isEmpty) {
-                //             return const Text('No movie found');
-                //           }
+                          if (movies.isEmpty) {
+                            return const Text('No movie found');
+                          }
 
-                //           return ListView.builder(
-                //               physics: const BouncingScrollPhysics(),
-                //               shrinkWrap: true,
-                //               itemCount: movies.length,
-                //               itemBuilder: ((context, index) {
-                //                 final movie = movies[index];
-                //                 return MovieCard(movieModel: movie);
-                //               }));
-                //         }
-                //       }),
-                // )
+                          return ListView.builder(
+                              physics: const BouncingScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: movies.length,
+                              itemBuilder: ((context, index) {
+                                final movie = movies[index];
+                                return MovieCard(movieModel: movie);
+                              }));
+                        }
+                      }),
+                )
               ]),
               const MediaLibraryScreen(),
               const MoreScreen()

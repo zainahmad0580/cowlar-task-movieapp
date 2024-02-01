@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:movieapp/provider/navbar_provider.dart';
-import 'package:movieapp/utils/app_assets.dart';
 import 'package:movieapp/utils/app_colors.dart';
 import 'package:provider/provider.dart';
 

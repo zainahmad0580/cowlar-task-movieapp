@@ -1,3 +1,5 @@
+import 'package:movieapp/controller/date_controller.dart';
+
 class MovieModel {
   bool? adult;
   String? backdropPath;
@@ -41,7 +43,7 @@ class MovieModel {
     overview = json['overview'] ?? '';
     popularity = json['popularity'] ?? 0.00;
     posterPath = json['poster_path'] ?? '';
-    releaseDate = json['release_date'] ?? '';
+    releaseDate = DateController.getDateFormatMDY(json['release_date']);
     title = json['title'] ?? '';
     video = json['video'] ?? false;
     voteAverage = json['vote_average'] ?? 0.00;

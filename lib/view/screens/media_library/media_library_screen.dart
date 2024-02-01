@@ -5,6 +5,6 @@ class MediaLibraryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text('Media Library');
+    return const Center(child: Text('Media Library'));
   }
 }
