@@ -3,6 +3,7 @@ import 'package:movieapp/utils/styles.dart';
 
 import '../../utils/app_colors.dart';
 
+//====Reuseable with black or white foreground color
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool isForegroundWhite;
   final String title;
@@ -20,7 +21,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         elevation: 0,
         titleSpacing: 0,
         leading: IconButton(
-            onPressed: () => onBackButtonPressed ?? Navigator.pop(context),
+            onPressed: () => Navigator.pop(context),
             icon: Icon(Icons.arrow_back_ios,
                 color: isForegroundWhite ? AppColors.white : AppColors.black)),
         title: Text(title,

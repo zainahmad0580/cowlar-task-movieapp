@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:movieapp/provider/navbar_provider.dart';
 import 'package:movieapp/provider/search_provider.dart';
 import 'package:movieapp/utils/app_colors.dart';
+import 'package:movieapp/utils/styles.dart';
 import 'package:movieapp/view/screens/dashboard/dashboard_screen.dart';
 import 'package:movieapp/view/screens/genre/widgets/searched_movies.dart';
 import 'package:movieapp/view/screens/media_library/media_library_screen.dart';
 import 'package:movieapp/view/screens/more/more_screen.dart';
-import 'package:movieapp/view/widgets/custom_app_bar.dart';
 import 'package:movieapp/view/widgets/custom_navbar.dart';
 import 'package:provider/provider.dart';
 
@@ -26,12 +26,19 @@ class SearchResultsScreen extends StatelessWidget {
         }
       },
       child: Scaffold(
-        appBar: CustomAppBar(
-            title: '$resultCount Results Found',
-            isForegroundWhite: false,
-            onBackButtonPressed: () =>
-                Provider.of<SearchProvider>(context, listen: false)
-                    .clearQuery()),
+        appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            titleSpacing: 0,
+            leading: IconButton(
+                onPressed: () {
+                  Provider.of<SearchProvider>(context, listen: false)
+                      .clearQuery();
+                  Navigator.pop(context);
+                },
+                icon: const Icon(Icons.arrow_back_ios, color: AppColors.black)),
+            title: Text('$resultCount Resultsss Found',
+                style: ThemeText.appBarBlack)),
         bottomNavigationBar: const CustomNavBar(),
         backgroundColor: AppColors.white,
         body: SafeArea(
