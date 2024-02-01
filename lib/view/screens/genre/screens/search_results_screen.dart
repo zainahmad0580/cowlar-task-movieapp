@@ -37,7 +37,7 @@ class SearchResultsScreen extends StatelessWidget {
                   Navigator.pop(context);
                 },
                 icon: const Icon(Icons.arrow_back_ios, color: AppColors.black)),
-            title: Text('$resultCount Resultsss Found',
+            title: Text('$resultCount Results Found',
                 style: ThemeText.appBarBlack)),
         bottomNavigationBar: const CustomNavBar(),
         backgroundColor: AppColors.white,
