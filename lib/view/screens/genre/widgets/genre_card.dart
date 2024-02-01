@@ -11,7 +11,8 @@ class GenreCard extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Container(
-      padding: EdgeInsets.only(left: size.width * 0.03),
+      padding:
+          EdgeInsets.only(left: size.width * 0.03, bottom: size.height * 0.02),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           image: DecorationImage(
