@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:movieapp/provider/genre_provider.dart';
+import 'package:movieapp/provider/mqtt_provider.dart';
 import 'package:movieapp/provider/navbar_provider.dart';
 import 'package:movieapp/provider/search_provider.dart';
 import 'package:movieapp/provider/video_provider.dart';
@@ -25,7 +26,8 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(create: (_) => GenreProvider()),
           ChangeNotifierProvider(create: (_) => SearchProvider()),
           ChangeNotifierProvider(create: (_) => NavBarProvider()),
-          ChangeNotifierProvider(create: (_) => VideoProvider())
+          ChangeNotifierProvider(create: (_) => VideoProvider()),
+          ChangeNotifierProvider(create: (_) => MQTTProvider()),
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:movieapp/utils/app_colors.dart';
 
+enum MQTTAppConnectionState { connected, disconnected, connecting }
+
 const String youtubeUrl = 'https://www.youtube.com/watch?v=';
 String apiKey = dotenv.get('API_KEY', fallback: '');
 
