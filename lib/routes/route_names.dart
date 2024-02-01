@@ -4,4 +4,5 @@ class RouteNames {
   static const String movieList = '/movie-list';
   static const String movieDetail = '/movie-detail';
   static const String genreList = '/genre-list';
+  static const String video = '/video';
 }

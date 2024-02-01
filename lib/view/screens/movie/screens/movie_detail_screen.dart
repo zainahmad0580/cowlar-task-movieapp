@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:movieapp/api/api_endpoints.dart';
 import 'package:movieapp/api/movie_api.dart';
 import 'package:movieapp/model/movie_details_model.dart';
+import 'package:movieapp/routes/route_names.dart';
 import 'package:movieapp/utils/app_colors.dart';
+import 'package:movieapp/utils/constants.dart';
 import 'package:movieapp/utils/styles.dart';
 import 'package:movieapp/view/screens/movie/widgets/genres.dart';
 import 'package:movieapp/view/screens/movie/widgets/overview.dart';
@@ -67,7 +69,11 @@ class MovieDetailScreen extends StatelessWidget {
                                   width: size.width * 0.7,
                                   iconData: Icons.play_arrow,
                                   title: 'Watch Trailer',
-                                  onPress: () {})
+                                  onPress: () {
+                                    Navigator.pushNamed(
+                                        context, RouteNames.video,
+                                        arguments: videoKey);
+                                  })
                             ]),
                           ),
                         ),

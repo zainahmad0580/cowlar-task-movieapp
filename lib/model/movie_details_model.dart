@@ -1,3 +1,4 @@
+import '../controller/date_controller.dart';
 import 'genre_model.dart';
 import 'movie_model.dart';
 import 'production_companies_model.dart';
@@ -94,7 +95,7 @@ class MovieDetailsModel extends MovieModel {
         productionCountries!.add(ProductionCountriesModel.fromJson(v));
       });
     }
-    releaseDate = json['release_date'];
+    releaseDate = DateController.getDateFormatMDY(json['release_date']);
     revenue = json['revenue'];
     runtime = json['runtime'];
     if (json['spoken_languages'] != null) {

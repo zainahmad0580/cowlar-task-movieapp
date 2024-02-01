@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movieapp/provider/navbar_provider.dart';
 import 'package:movieapp/provider/search_provider.dart';
+import 'package:movieapp/provider/video_provider.dart';
 import 'package:movieapp/routes/routes.dart';
 import 'package:movieapp/utils/app_colors.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +20,8 @@ class MyApp extends StatelessWidget {
       child: MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (_) => SearchProvider()),
-          ChangeNotifierProvider(create: (_) => NavBarProvider())
+          ChangeNotifierProvider(create: (_) => NavBarProvider()),
+          ChangeNotifierProvider(create: (_) => VideoProvider())
         ],
         child: MaterialApp(
           debugShowCheckedModeBanner: false,

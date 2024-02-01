@@ -21,62 +21,64 @@ class GenreListScreen extends StatelessWidget {
     return Scaffold(
       bottomNavigationBar: const CustomNavBar(),
       backgroundColor: AppColors.white,
-      body: Padding(
-        padding: EdgeInsets.symmetric(vertical: size.height * 0.02),
-        child: Consumer<NavBarProvider>(builder: (context, value, child) {
-          return IndexedStack(index: value.index, children: [
-            const DashboardScreen(),
-            Column(children: [
-              const SearchField(),
-              SizedBox(height: size.height * 0.03),
-              Expanded(
-                child: Container(
-                  color: AppColors.lightGreyBg,
-                  padding: EdgeInsets.symmetric(
-                      horizontal: size.width * 0.04,
-                      vertical: size.height * 0.03),
-                  child: FutureBuilder(
-                      future: GenreApi.getAllGenres(),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return ShimmerCardEffect(
-                              isList: false,
-                              items: 8,
-                              height: size.height * 0.2,
-                              width: size.width * 0.25);
-                        } else if (snapshot.hasError) {
-                          return const Icon(Icons.error);
-                        } else {
-                          List<GenreModel> genres = snapshot.data ?? [];
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: size.height * 0.02),
+          child: Consumer<NavBarProvider>(builder: (context, value, child) {
+            return IndexedStack(index: value.index, children: [
+              const DashboardScreen(),
+              Column(children: [
+                const SearchField(),
+                SizedBox(height: size.height * 0.03),
+                Expanded(
+                  child: Container(
+                    color: AppColors.lightGreyBg,
+                    padding: EdgeInsets.symmetric(
+                        horizontal: size.width * 0.04,
+                        vertical: size.height * 0.03),
+                    child: FutureBuilder(
+                        future: GenreApi.getAllGenres(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return ShimmerCardEffect(
+                                isList: false,
+                                items: 8,
+                                height: size.height * 0.2,
+                                width: size.width * 0.25);
+                          } else if (snapshot.hasError) {
+                            return const Icon(Icons.error);
+                          } else {
+                            List<GenreModel> genres = snapshot.data ?? [];
 
-                          if (genres.isEmpty) {
-                            return const Text('No genre found');
+                            if (genres.isEmpty) {
+                              return const Text('No genre found');
+                            }
+
+                            return GridView.builder(
+                                itemCount: genres.length,
+                                shrinkWrap: true,
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        crossAxisSpacing: size.width * 0.03,
+                                        mainAxisSpacing: size.height * 0.02,
+                                        childAspectRatio:
+                                            size.width / size.width * 1.5),
+                                itemBuilder: ((context, index) {
+                                  final genre = genres[index];
+                                  return GenreCard(genreModel: genre);
+                                }));
                           }
-
-                          return GridView.builder(
-                              itemCount: genres.length,
-                              shrinkWrap: true,
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2,
-                                      crossAxisSpacing: size.width * 0.03,
-                                      mainAxisSpacing: size.height * 0.02,
-                                      childAspectRatio:
-                                          size.width / size.width * 1.5),
-                              itemBuilder: ((context, index) {
-                                final genre = genres[index];
-                                return GenreCard(genreModel: genre);
-                              }));
-                        }
-                      }),
-                ),
-              )
-            ]),
-            const MediaLibraryScreen(),
-            const MoreScreen()
-          ]);
-        }),
+                        }),
+                  ),
+                )
+              ]),
+              const MediaLibraryScreen(),
+              const MoreScreen()
+            ]);
+          }),
+        ),
       ),
     );
   }
