@@ -10,7 +10,7 @@ class CustomTextField extends StatelessWidget {
   const CustomTextField({
     super.key,
     required this.controller,
-    this.textInputAction = TextInputAction.next,
+    this.textInputAction = TextInputAction.done,
     required this.keyboardType,
     required this.hintText,
     required this.labelText,

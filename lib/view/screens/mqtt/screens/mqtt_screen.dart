@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movieapp/mqtt/mqtt_client.dart';
 import 'package:movieapp/provider/mqtt_provider.dart';
+import 'package:movieapp/utils/utils.dart';
 import 'package:movieapp/view/widgets/custom_text_field.dart';
 import 'package:movieapp/view/widgets/round_button.dart';
 import 'package:provider/provider.dart';
@@ -35,28 +36,25 @@ class _MQTTScreenState extends State<MQTTScreen> {
       body: SingleChildScrollView(
         child: Column(children: [
           const Text('MQTT Example'),
-          SizedBox(height: size.height * 0.01),
-          Row(
-            children: [
-              Expanded(
-                child: RoundButton(
-                    title: 'Connect to Broker',
-                    onPress: () => _configureAndConnect()),
-              ),
-              Expanded(
-                child: RoundButton(
-                    title: 'Disconnect', onPress: () => _disconnect()),
-              ),
-            ],
-          ),
-          SizedBox(height: size.height * 0.01),
+          SizedBox(height: size.height * 0.03),
           CustomTextField(
               controller: _topicController,
               keyboardType: TextInputType.name,
               hintText: 'Enter Topic',
               labelText: 'Topic'),
-          RoundButton(title: 'Subscribe to Topic', onPress: () {}),
           SizedBox(height: size.height * 0.01),
+          RoundButton(
+              title: 'Connect & Subscribe',
+              onPress: () {
+                if (_topicController.text.isNotEmpty) {
+                  _configureAndConnect();
+                } else {
+                  Utils.toastMessage(msg: 'Please enter a topic');
+                }
+              }),
+          SizedBox(height: size.height * 0.01),
+          RoundButton(title: 'Disconnect', onPress: () => _disconnect()),
+          SizedBox(height: size.height * 0.03),
           CustomTextField(
               controller: _messageController,
               keyboardType: TextInputType.name,
@@ -65,9 +63,19 @@ class _MQTTScreenState extends State<MQTTScreen> {
           SizedBox(height: size.height * 0.01),
           RoundButton(
               title: 'Publish Message',
-              onPress: () => _publishMessage(_messageController.text.trim())),
+              onPress: () {
+                if (_messageController.text.isNotEmpty) {
+                  _publishMessage(_messageController.text.trim());
+                } else {
+                  Utils.toastMessage(msg: 'Please enter a message');
+                }
+              }),
           SizedBox(height: size.height * 0.01),
-          const Text('Published Message: '),
+          Consumer<MQTTProvider>(
+            builder: (context, value, child) {
+              return Text('Published Messages: ${value.getHistoryText}');
+            },
+          )
         ]),
       ),
     );

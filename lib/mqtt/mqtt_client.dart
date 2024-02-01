@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:movieapp/provider/mqtt_provider.dart';
 import 'package:movieapp/utils/constants.dart';
+import 'package:movieapp/utils/utils.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
 
@@ -34,12 +35,13 @@ class MQTT {
         .withWillMessage('My Will message')
         .startClean() // Non persistent session for testing
         .withWillQos(MqttQos.atLeastOnce);
+
     log('EXAMPLE::Mosquitto client connecting....');
     _client!.connectionMessage = connMess;
   }
 
-  // Connect to the host
-  void connect() async {
+  // Connect to the broker
+  Future<void> connect() async {
     assert(_client != null);
     try {
       log('EXAMPLE::Mosquitto start client connecting....');
@@ -49,6 +51,12 @@ class MQTT {
       log('EXAMPLE::client exception - $e');
       disconnect();
     }
+  }
+
+  // Subscribe to a topic
+  void subscribe() {
+    assert(_client != null);
+    _client!.subscribe(_topic, MqttQos.atLeastOnce);
   }
 
   void disconnect() {
@@ -64,11 +72,13 @@ class MQTT {
 
   /// The subscribed callback
   void onSubscribed(String topic) {
+    Utils.toastMessage(msg: 'Successfully subscribed to topic: $topic');
     log('EXAMPLE::Subscription confirmed for topic $topic');
   }
 
   /// The unsolicited disconnect callback
   void onDisconnected() {
+    Utils.toastMessage(msg: 'Client Disconnected Successfully');
     log('EXAMPLE::OnDisconnected client callback - Client disconnection');
     if (_client!.connectionStatus!.returnCode ==
         MqttConnectReturnCode.noneSpecified) {
@@ -80,8 +90,9 @@ class MQTT {
   /// The successful connect callback
   void onConnected() {
     _currentState.setAppConnectionState(MQTTAppConnectionState.connected);
+    Utils.toastMessage(msg: 'Client Connected Successfully');
     log('EXAMPLE::Mosquitto client connected....');
-    _client!.subscribe(_topic, MqttQos.atLeastOnce);
+    subscribe(); // Subscribe to the topic after successful connection
     _client!.updates!.listen((List<MqttReceivedMessage<MqttMessage?>>? c) {
       final MqttPublishMessage recMess = c![0].payload as MqttPublishMessage;
 
@@ -92,6 +103,6 @@ class MQTT {
       log('EXAMPLE::Change notification:: topic is <${c[0].topic}>, payload is <-- $pt -->');
       log('');
     });
-    log('EXAMPLE::OnConnected client callback - Client connection was sucessful');
+    log('EXAMPLE::OnConnected client callback - Client connection was successful');
   }
 }
