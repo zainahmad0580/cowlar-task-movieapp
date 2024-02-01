@@ -10,7 +10,7 @@ class VideoApi {
   static Future<List<VideoModel>> getAllTrailerVideos(int movieId) async {
     List<VideoModel> videos = [];
     try {
-      final uri = Uri.parse('${ApiEndpoints.movieUrl}/$movieId')
+      final uri = Uri.parse('${ApiEndpoints.movieUrl}/$movieId/videos')
           .replace(queryParameters: {'api_key': apiKey});
       final response = await http.get(uri);
 

@@ -5,7 +5,6 @@ import 'package:movieapp/model/movie_details_model.dart';
 import 'package:movieapp/provider/video_provider.dart';
 import 'package:movieapp/routes/route_names.dart';
 import 'package:movieapp/utils/app_colors.dart';
-import 'package:movieapp/utils/constants.dart';
 import 'package:movieapp/utils/styles.dart';
 import 'package:movieapp/utils/utils.dart';
 import 'package:movieapp/view/screens/movie/widgets/genres.dart';
@@ -22,6 +21,10 @@ class MovieDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    //Set trailer of the movie as the widget is builtt, for quick access
+    if (movieId != null) {
+      Provider.of<VideoProvider>(context, listen: false).getTrailer(movieId!);
+    }
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: const CustomAppBar(
@@ -75,15 +78,21 @@ class MovieDetailScreen extends StatelessWidget {
                                     iconData: Icons.play_arrow,
                                     title: 'Watch Trailer',
                                     onPress: () async {
-                                      Utils.showLoader(context);
-                                      await value.getTrailer(movieId!);
-                                      Utils.hideLoader(context);
-                                      value.videoKey == null
-                                          ? Utils.toastMessage(
-                                              msg: 'Trailer not found')
-                                          : Navigator.pushNamed(
-                                              context, RouteNames.video,
-                                              arguments: videoKey);
+                                      if (value.videoKey == null) {
+                                        Utils.showLoader(context);
+                                        await value.getTrailer(movieId!);
+                                        Utils.hideLoader(context);
+                                        value.videoKey == null
+                                            ? Utils.toastMessage(
+                                                msg: 'Trailer not found')
+                                            : Navigator.pushNamed(
+                                                context, RouteNames.video,
+                                                arguments: value.videoKey);
+                                      } else {
+                                        Navigator.pushNamed(
+                                            context, RouteNames.video,
+                                            arguments: value.videoKey);
+                                      }
                                     });
                               })
                             ]),
