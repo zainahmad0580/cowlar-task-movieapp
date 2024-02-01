@@ -4,8 +4,10 @@ import 'package:movieapp/utils/styles.dart';
 import '../../utils/app_colors.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final bool isForegroundWhite;
   final String title;
-  const CustomAppBar({super.key, required this.title});
+  const CustomAppBar(
+      {super.key, required this.title, this.isForegroundWhite = true});
 
   @override
   Widget build(BuildContext context) {
@@ -15,11 +17,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         titleSpacing: 0,
         leading: IconButton(
             onPressed: () => Navigator.pop(context),
-            icon: const Icon(
-              Icons.arrow_back_ios,
-              color: AppColors.white,
-            )),
-        title: Text(title, style: ThemeText.appBarWhite));
+            icon: Icon(Icons.arrow_back_ios,
+                color: isForegroundWhite ? AppColors.white : AppColors.black)),
+        title: Text(title,
+            style: isForegroundWhite
+                ? ThemeText.appBarWhite
+                : ThemeText.appBarBlack));
   }
 
   @override

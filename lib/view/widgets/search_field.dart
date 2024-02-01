@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:movieapp/provider/search_provider.dart';
+import 'package:movieapp/routes/route_names.dart';
 import 'package:movieapp/utils/app_colors.dart';
 import 'package:movieapp/utils/styles.dart';
 import 'package:provider/provider.dart';
@@ -58,7 +61,16 @@ class _SearchFieldState extends State<SearchField> {
                       )),
               hintStyle: ThemeText.subtitleTextGrey,
               hintText: 'TV shows, movies and more'),
-          onChanged: (query) => value.setQuery(query),
+          onChanged: (query) async => await value.setQuery(query),
+          onEditingComplete: () {
+            if (value.query.isNotEmpty) {
+              log('Navigate');
+              Navigator.pushNamed(context, RouteNames.searchResult,
+                  arguments: value.searchedMovies.length);
+            } else {
+              log('Dont');
+            }
+          },
         );
       })),
     );

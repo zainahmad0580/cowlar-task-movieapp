@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movieapp/routes/route_names.dart';
+import 'package:movieapp/view/screens/genre/screens/search_results_screen.dart';
 import 'package:movieapp/view/screens/home/screens/home_screen.dart';
 import 'package:movieapp/view/screens/genre/screens/genre_list_screen.dart';
 import 'package:movieapp/view/screens/movie/screens/movie_detail_screen.dart';
@@ -23,6 +24,9 @@ class Routes {
       case RouteNames.video:
         return MaterialPageRoute(
             builder: (_) => VideoScreen(videoKey: args as String));
+      case RouteNames.searchResult:
+        return MaterialPageRoute(
+            builder: (_) => SearchResultsScreen(resultCount: args as int));
       default:
         return MaterialPageRoute(builder: (_) => const SplashScreen());
     }
