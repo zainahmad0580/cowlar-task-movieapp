@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:movieapp/api/api_endpoints.dart';
 import 'package:movieapp/api/movie_api.dart';
 import 'package:movieapp/model/movie_details_model.dart';
-import 'package:movieapp/model/movie_model.dart';
 import 'package:movieapp/utils/app_colors.dart';
 import 'package:movieapp/utils/styles.dart';
 import 'package:movieapp/view/screens/movie/widgets/genres.dart';
@@ -12,8 +11,8 @@ import 'package:movieapp/view/widgets/outlined_icon_button.dart';
 import 'package:movieapp/view/widgets/round_button.dart';
 
 class MovieDetailScreen extends StatelessWidget {
-  final MovieModel movieModel;
-  const MovieDetailScreen({super.key, required this.movieModel});
+  final int movieId;
+  const MovieDetailScreen({super.key, required this.movieId});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +21,7 @@ class MovieDetailScreen extends StatelessWidget {
         extendBodyBehindAppBar: true,
         appBar: const CustomAppBar(title: 'Watch'),
         body: FutureBuilder(
-            future: MovieApi.getMovieDetails(context, movieModel.id!),
+            future: MovieApi.getMovieDetails(movieId),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CircularProgressIndicator());
@@ -30,6 +29,10 @@ class MovieDetailScreen extends StatelessWidget {
                 return const Center(child: Icon(Icons.error));
               } else if (snapshot.hasData) {
                 MovieDetailsModel? movieDetailsModel = snapshot.data;
+
+                if (movieDetailsModel == null) {
+                  return const Center(child: Text('No Details Found'));
+                }
                 return Column(
                   children: [
                     Container(
@@ -40,13 +43,13 @@ class MovieDetailScreen extends StatelessWidget {
                       decoration: BoxDecoration(
                           image: DecorationImage(
                               image: NetworkImage(ApiEndpoints.storageUrlw500 +
-                                  movieModel.backdropPath!),
+                                  movieDetailsModel.backdropPath!),
                               onError: (exception, stackTrace) =>
                                   const Icon(Icons.error),
                               fit: BoxFit.cover)),
                       child: SingleChildScrollView(
                         child: Column(children: [
-                          Text('In Theatres ${movieModel.releaseDate}',
+                          Text('In Theatres ${movieDetailsModel.releaseDate}',
                               style: ThemeText.headingText20),
                           SizedBox(height: size.height * 0.02),
                           RoundButton(
@@ -71,12 +74,11 @@ class MovieDetailScreen extends StatelessWidget {
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                if (movieDetailsModel != null)
-                                  Genres(genres: movieDetailsModel.genres!),
+                                Genres(genres: movieDetailsModel.genres!),
                                 SizedBox(height: size.height * 0.01),
                                 const Divider(thickness: 0.5),
                                 SizedBox(height: size.height * 0.01),
-                                Overview(overview: movieModel.overview)
+                                Overview(overview: movieDetailsModel.overview)
                               ]),
                         ),
                       ),

@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:movieapp/api/api_endpoints.dart';
 import 'package:movieapp/model/genre_model.dart';
@@ -8,7 +7,7 @@ import 'package:movieapp/utils/constants.dart';
 import 'package:movieapp/utils/utils.dart';
 
 class GenreApi {
-  static Future<List<GenreModel>> getAllGenres(BuildContext context) async {
+  static Future<List<GenreModel>> getAllGenres() async {
     List<GenreModel> genres = [];
     try {
       final uri = Uri.parse(ApiEndpoints.genresList)

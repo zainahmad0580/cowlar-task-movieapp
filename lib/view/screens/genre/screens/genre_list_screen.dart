@@ -36,7 +36,7 @@ class GenreListScreen extends StatelessWidget {
                       horizontal: size.width * 0.04,
                       vertical: size.height * 0.03),
                   child: FutureBuilder(
-                      future: GenreApi.getAllGenres(context),
+                      future: GenreApi.getAllGenres(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {

@@ -29,7 +29,7 @@ class HomeScreen extends StatelessWidget {
               Column(children: [
                 Expanded(
                   child: FutureBuilder(
-                      future: MovieApi.getAllMovies(context),
+                      future: MovieApi.getAllMovies(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
                             ConnectionState.waiting) {

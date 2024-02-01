@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:movieapp/api/api_endpoints.dart';
 import 'package:movieapp/model/movie_details_model.dart';
@@ -9,7 +8,7 @@ import 'package:movieapp/utils/constants.dart';
 import 'package:movieapp/utils/utils.dart';
 
 class MovieApi {
-  static Future<List<MovieModel>> getAllMovies(BuildContext context) async {
+  static Future<List<MovieModel>> getAllMovies() async {
     List<MovieModel> movies = [];
     try {
       final uri = Uri.parse(ApiEndpoints.moviesList)
@@ -37,8 +36,7 @@ class MovieApi {
     return movies;
   }
 
-  static Future<MovieDetailsModel?> getMovieDetails(
-      BuildContext context, int movieId) async {
+  static Future<MovieDetailsModel?> getMovieDetails(int movieId) async {
     MovieDetailsModel? movieDetailsModel;
     try {
       final uri = Uri.parse('${ApiEndpoints.movieDetails}/$movieId')
