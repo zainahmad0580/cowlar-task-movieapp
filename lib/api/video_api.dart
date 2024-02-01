@@ -33,6 +33,7 @@ class VideoApi {
         Utils.toastMessage(msg: message ?? 'Unauthorized access');
       }
     } catch (e) {
+      Utils.toastMessage();
       log(e.toString());
     }
     return videos;
