@@ -18,7 +18,6 @@ class _VideoScreenState extends State<VideoScreen> {
   void dispose() {
     super.dispose();
     _controller.dispose();
-    // SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
   }
 
   @override
@@ -37,13 +36,11 @@ class _VideoScreenState extends State<VideoScreen> {
           setState(() {});
         }
       });
-// Set preferred orientations for landscape mode
+    // Set preferred orientations for landscape mode so that video can be seen in full screen initially
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ]);
-    // // Hide the system overlays (status bar, navigation bar)
-    // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive, overlays: []);
   }
 
   @override
@@ -53,13 +50,12 @@ class _VideoScreenState extends State<VideoScreen> {
           controller: _controller,
           showVideoProgressIndicator: true,
           onEnded: (metaData) {
-            // Switch back to portrait mode
+            //Switch back to portrait mode
             SystemChrome.setPreferredOrientations([
               DeviceOrientation.portraitUp,
               DeviceOrientation.portraitDown,
             ]);
-            // SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-            //     overlays: []);
+            //Go back to details screen after movie is completed
             Navigator.pop(context);
           }),
       builder: (context, player) =>

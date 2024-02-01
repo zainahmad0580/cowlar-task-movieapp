@@ -7,10 +7,10 @@ import 'package:movieapp/utils/constants.dart';
 import 'package:movieapp/utils/utils.dart';
 
 class VideoApi {
-  static Future<List<VideoModel>> getAllTrailerVideos() async {
+  static Future<List<VideoModel>> getAllTrailerVideos(int movieId) async {
     List<VideoModel> videos = [];
     try {
-      final uri = Uri.parse(ApiEndpoints.genresList)
+      final uri = Uri.parse('${ApiEndpoints.movieUrl}/$movieId')
           .replace(queryParameters: {'api_key': apiKey});
       final response = await http.get(uri);
 

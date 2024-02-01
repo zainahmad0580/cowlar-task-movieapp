@@ -2,15 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:movieapp/api/api_endpoints.dart';
 import 'package:movieapp/api/movie_api.dart';
 import 'package:movieapp/model/movie_details_model.dart';
+import 'package:movieapp/provider/video_provider.dart';
 import 'package:movieapp/routes/route_names.dart';
 import 'package:movieapp/utils/app_colors.dart';
 import 'package:movieapp/utils/constants.dart';
 import 'package:movieapp/utils/styles.dart';
+import 'package:movieapp/utils/utils.dart';
 import 'package:movieapp/view/screens/movie/widgets/genres.dart';
 import 'package:movieapp/view/screens/movie/widgets/overview.dart';
 import 'package:movieapp/view/widgets/custom_app_bar.dart';
 import 'package:movieapp/view/widgets/outlined_icon_button.dart';
 import 'package:movieapp/view/widgets/round_button.dart';
+import 'package:provider/provider.dart';
 
 class MovieDetailScreen extends StatelessWidget {
   final int? movieId;
@@ -65,15 +68,24 @@ class MovieDetailScreen extends StatelessWidget {
                                   title: 'Get Tickets',
                                   onPress: () {}),
                               SizedBox(height: size.height * 0.01),
-                              OutlinedIconButton(
-                                  width: size.width * 0.7,
-                                  iconData: Icons.play_arrow,
-                                  title: 'Watch Trailer',
-                                  onPress: () {
-                                    Navigator.pushNamed(
-                                        context, RouteNames.video,
-                                        arguments: videoKey);
-                                  })
+                              Consumer<VideoProvider>(
+                                  builder: (context, value, child) {
+                                return OutlinedIconButton(
+                                    width: size.width * 0.7,
+                                    iconData: Icons.play_arrow,
+                                    title: 'Watch Trailer',
+                                    onPress: () async {
+                                      Utils.showLoader(context);
+                                      await value.getTrailer(movieId!);
+                                      Utils.hideLoader(context);
+                                      value.videoKey == null
+                                          ? Utils.toastMessage(
+                                              msg: 'Trailer not found')
+                                          : Navigator.pushNamed(
+                                              context, RouteNames.video,
+                                              arguments: videoKey);
+                                    });
+                              })
                             ]),
                           ),
                         ),
