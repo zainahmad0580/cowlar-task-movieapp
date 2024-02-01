@@ -29,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen>
     super.initState();
 
     Timer(const Duration(seconds: 3), () async {
-      //To set genres
+      //To set genres before going inside app
       Provider.of<GenreProvider>(context, listen: false).setGenres();
       Navigator.pushNamedAndRemoveUntil(
           context, RouteNames.home, (route) => false);

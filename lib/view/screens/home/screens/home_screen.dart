@@ -28,37 +28,35 @@ class HomeScreen extends StatelessWidget {
               const DashboardScreen(),
               RefreshIndicator(
                 onRefresh: () async => await MovieApi.getAllMovies(),
-                child: Column(children: [
-                  Expanded(
-                    child: FutureBuilder(
-                        future: MovieApi.getAllMovies(),
-                        builder: (context, snapshot) {
-                          if (snapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return ShimmerCardEffect(
-                                items: 4,
-                                height: size.height * 0.25,
-                                width: size.width * 0.9);
-                          } else if (snapshot.hasError) {
-                            return const Icon(Icons.error);
-                          } else {
-                            List<MovieModel> movies = snapshot.data ?? [];
+                child: ListView(children: [
+                  FutureBuilder(
+                      future: MovieApi.getAllMovies(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return ShimmerCardEffect(
+                              items: 4,
+                              height: size.height * 0.25,
+                              width: size.width * 0.9);
+                        } else if (snapshot.hasError) {
+                          return const Icon(Icons.error);
+                        } else {
+                          List<MovieModel> movies = snapshot.data ?? [];
 
-                            if (movies.isEmpty) {
-                              return const Text('No movie found');
-                            }
-
-                            return ListView.builder(
-                                physics: const BouncingScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount: movies.length,
-                                itemBuilder: ((context, index) {
-                                  final movie = movies[index];
-                                  return MovieCard(movieModel: movie);
-                                }));
+                          if (movies.isEmpty) {
+                            return const Text('No movie found');
                           }
-                        }),
-                  )
+
+                          return ListView.builder(
+                              physics: const BouncingScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: movies.length,
+                              itemBuilder: ((context, index) {
+                                final movie = movies[index];
+                                return MovieCard(movieModel: movie);
+                              }));
+                        }
+                      })
                 ]),
               ),
               const MediaLibraryScreen(),
