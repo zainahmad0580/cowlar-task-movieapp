@@ -44,6 +44,7 @@ dependencies:
   youtube_player_flutter: ^8.1.2
   mqtt_client: ^10.0.2
   moor_flutter: ^4.1.0
+  connectivity_plus: ^5.0.2
 
 dev_dependencies:
   flutter_test:
