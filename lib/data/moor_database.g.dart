@@ -9,7 +9,7 @@ part of 'moor_database.dart';
 // ignore_for_file: type=lint
 class Movie extends DataClass implements Insertable<Movie> {
   final int id;
-  final String title;
+  final String? title;
   final String? backdropPath;
   final String? originalTitle;
   final String? overview;
@@ -24,7 +24,7 @@ class Movie extends DataClass implements Insertable<Movie> {
   final String? genreIds;
   Movie(
       {required this.id,
-      required this.title,
+      this.title,
       this.backdropPath,
       this.originalTitle,
       this.overview,
@@ -44,7 +44,7 @@ class Movie extends DataClass implements Insertable<Movie> {
       id: const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
       title: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}title'])!,
+          .mapFromDatabaseResponse(data['${effectivePrefix}title']),
       backdropPath: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}backdrop_path']),
       originalTitle: const StringType()
@@ -75,7 +75,9 @@ class Movie extends DataClass implements Insertable<Movie> {
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    map['title'] = Variable<String>(title);
+    if (!nullToAbsent || title != null) {
+      map['title'] = Variable<String?>(title);
+    }
     if (!nullToAbsent || backdropPath != null) {
       map['backdrop_path'] = Variable<String?>(backdropPath);
     }
@@ -118,7 +120,8 @@ class Movie extends DataClass implements Insertable<Movie> {
   MoviesCompanion toCompanion(bool nullToAbsent) {
     return MoviesCompanion(
       id: Value(id),
-      title: Value(title),
+      title:
+          title == null && nullToAbsent ? const Value.absent() : Value(title),
       backdropPath: backdropPath == null && nullToAbsent
           ? const Value.absent()
           : Value(backdropPath),
@@ -161,7 +164,7 @@ class Movie extends DataClass implements Insertable<Movie> {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return Movie(
       id: serializer.fromJson<int>(json['id']),
-      title: serializer.fromJson<String>(json['title']),
+      title: serializer.fromJson<String?>(json['title']),
       backdropPath: serializer.fromJson<String?>(json['backdropPath']),
       originalTitle: serializer.fromJson<String?>(json['originalTitle']),
       overview: serializer.fromJson<String?>(json['overview']),
@@ -181,7 +184,7 @@ class Movie extends DataClass implements Insertable<Movie> {
     serializer ??= moorRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'title': serializer.toJson<String>(title),
+      'title': serializer.toJson<String?>(title),
       'backdropPath': serializer.toJson<String?>(backdropPath),
       'originalTitle': serializer.toJson<String?>(originalTitle),
       'overview': serializer.toJson<String?>(overview),
@@ -287,7 +290,7 @@ class Movie extends DataClass implements Insertable<Movie> {
 
 class MoviesCompanion extends UpdateCompanion<Movie> {
   final Value<int> id;
-  final Value<String> title;
+  final Value<String?> title;
   final Value<String?> backdropPath;
   final Value<String?> originalTitle;
   final Value<String?> overview;
@@ -318,7 +321,7 @@ class MoviesCompanion extends UpdateCompanion<Movie> {
   });
   MoviesCompanion.insert({
     this.id = const Value.absent(),
-    required String title,
+    this.title = const Value.absent(),
     this.backdropPath = const Value.absent(),
     this.originalTitle = const Value.absent(),
     this.overview = const Value.absent(),
@@ -331,10 +334,10 @@ class MoviesCompanion extends UpdateCompanion<Movie> {
     this.voteAverage = const Value.absent(),
     this.voteCount = const Value.absent(),
     this.genreIds = const Value.absent(),
-  }) : title = Value(title);
+  });
   static Insertable<Movie> custom({
     Expression<int>? id,
-    Expression<String>? title,
+    Expression<String?>? title,
     Expression<String?>? backdropPath,
     Expression<String?>? originalTitle,
     Expression<String?>? overview,
@@ -368,7 +371,7 @@ class MoviesCompanion extends UpdateCompanion<Movie> {
 
   MoviesCompanion copyWith(
       {Value<int>? id,
-      Value<String>? title,
+      Value<String?>? title,
       Value<String?>? backdropPath,
       Value<String?>? originalTitle,
       Value<String?>? overview,
@@ -406,7 +409,7 @@ class MoviesCompanion extends UpdateCompanion<Movie> {
       map['id'] = Variable<int>(id.value);
     }
     if (title.present) {
-      map['title'] = Variable<String>(title.value);
+      map['title'] = Variable<String?>(title.value);
     }
     if (backdropPath.present) {
       map['backdrop_path'] = Variable<String?>(backdropPath.value);
@@ -484,8 +487,8 @@ class $MoviesTable extends Movies with TableInfo<$MoviesTable, Movie> {
   final VerificationMeta _titleMeta = const VerificationMeta('title');
   @override
   late final GeneratedColumn<String?> title = GeneratedColumn<String?>(
-      'title', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
+      'title', aliasedName, true,
+      type: const StringType(), requiredDuringInsert: false);
   final VerificationMeta _backdropPathMeta =
       const VerificationMeta('backdropPath');
   @override
@@ -587,8 +590,6 @@ class $MoviesTable extends Movies with TableInfo<$MoviesTable, Movie> {
     if (data.containsKey('title')) {
       context.handle(
           _titleMeta, title.isAcceptableOrUnknown(data['title']!, _titleMeta));
-    } else if (isInserting) {
-      context.missing(_titleMeta);
     }
     if (data.containsKey('backdrop_path')) {
       context.handle(

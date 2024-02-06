@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:moor_flutter/moor_flutter.dart';
 import 'package:movieapp/model/movie_model.dart';
@@ -9,7 +10,7 @@ part 'moor_database.g.dart';
 // Define a table for movies
 class Movies extends Table {
   IntColumn get id => integer().autoIncrement()();
-  TextColumn get title => text()();
+  TextColumn get title => text().nullable()();
   TextColumn get backdropPath => text().nullable()();
   TextColumn get originalTitle => text().nullable()();
   TextColumn get overview => text().nullable()();
@@ -40,6 +41,7 @@ class AppDatabase extends _$AppDatabase {
 
   // Define a method to get the movies from the database
   Future<List<MovieModel>> getAllMovies() async {
+    log('Getting all movies from local db');
     return select(movies)
         .map((row) => MovieModel(
               id: row.id,
@@ -64,12 +66,13 @@ class AppDatabase extends _$AppDatabase {
 
   // Define a method to insert movies into the database
   Future<void> insertMovies(List<MovieModel> movies) async {
+    log('Inserting all movies into local db');
     batch((batch) {
       for (var movie in movies) {
         batch.insert(
             this.movies,
             MoviesCompanion(
-              title: Value(movie.title!),
+              title: Value(movie.title),
               backdropPath: Value(movie.backdropPath),
               originalTitle: Value(movie.originalTitle),
               overview: Value(movie.overview),
