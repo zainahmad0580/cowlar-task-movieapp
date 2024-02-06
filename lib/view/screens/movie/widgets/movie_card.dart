@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:movieapp/api/api_endpoints.dart';
 import 'package:movieapp/model/movie_model.dart';
 import 'package:movieapp/routes/route_names.dart';
+import 'package:movieapp/utils/app_colors.dart';
 import 'package:movieapp/utils/styles.dart';
 
 class MovieCard extends StatelessWidget {
@@ -20,6 +21,7 @@ class MovieCard extends StatelessWidget {
             EdgeInsets.only(left: size.width * 0.07, bottom: size.width * 0.05),
         height: size.height * 0.25,
         decoration: BoxDecoration(
+            color: AppColors.black,
             borderRadius: BorderRadius.circular(10),
             image: DecorationImage(
                 image: NetworkImage(

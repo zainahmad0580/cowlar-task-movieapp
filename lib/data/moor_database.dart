@@ -9,7 +9,7 @@ part 'moor_database.g.dart';
 
 // Define a table for movies
 class Movies extends Table {
-  IntColumn get id => integer().autoIncrement()();
+  IntColumn get id => integer()(); // Modify to remove autoIncrement
   TextColumn get title => text().nullable()();
   TextColumn get backdropPath => text().nullable()();
   TextColumn get originalTitle => text().nullable()();
@@ -23,6 +23,9 @@ class Movies extends Table {
   RealColumn get voteAverage => real().nullable()();
   IntColumn get voteCount => integer().nullable()();
   TextColumn get genreIds => text().nullable()(); // Store as JSON string
+
+  @override
+  Set<Column> get primaryKey => {id}; // Set id as the primary key
 }
 
 // Define the database class
@@ -72,6 +75,7 @@ class AppDatabase extends _$AppDatabase {
         batch.insert(
             this.movies,
             MoviesCompanion(
+              id: Value(movie.id), // Assigning id at runtime
               title: Value(movie.title),
               backdropPath: Value(movie.backdropPath),
               originalTitle: Value(movie.originalTitle),
@@ -84,7 +88,8 @@ class AppDatabase extends _$AppDatabase {
               video: Value(movie.video),
               voteAverage: Value(movie.voteAverage),
               voteCount: Value(movie.voteCount),
-            ));
+            ),
+            InsertMode.insertOrReplace);
       }
     });
   }

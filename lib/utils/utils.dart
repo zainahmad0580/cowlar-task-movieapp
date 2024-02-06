@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 // import 'package:fluttertoast/fluttertoast.dart';
@@ -18,6 +19,12 @@ class Utils {
       {String msg = 'Something went wrong'}) {
     ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(msg), duration: const Duration(seconds: 3)));
+  }
+
+  //To check if user is connected to internet
+  static Future<bool> isNotConnected() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    return connectivityResult == ConnectivityResult.none;
   }
 
   static void showLoader(BuildContext context) {

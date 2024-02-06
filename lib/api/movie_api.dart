@@ -12,15 +12,17 @@ class MovieApi {
   static final _database = AppDatabase();
   static Future<List<MovieModel>> getAllMovies() async {
     try {
-      // Retrieve movies from the local database
-      final List<MovieModel> movies = await _database.getAllMovies();
+      if (await Utils.isNotConnected()) {
+        // Retrieve movies from the local database
+        final List<MovieModel> movies = await _database.getAllMovies();
 
-      // If movies exist in the database, return them
-      if (movies.isNotEmpty) {
-        return movies;
+        // If movies exist in the database, return them
+        if (movies.isNotEmpty) {
+          return movies;
+        }
       }
 
-      // If no movies are found in the database, fetch them from the network
+      // If no movies are found in the database, fetch them from the api
       final uri = Uri.parse(ApiEndpoints.moviesList)
           .replace(queryParameters: {'api_key': apiKey});
       final response = await http.get(uri);
