@@ -103,6 +103,7 @@ class _MQTTScreenState extends State<MQTTScreen> {
     client = MQTT(topic: _topicController.text, state: currentAppState);
     client.initializeMQTTClient();
     client.connect();
+    _topicController.clear();
   }
 
   void _disconnect() {
