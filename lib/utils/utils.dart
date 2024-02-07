@@ -22,9 +22,13 @@ class Utils {
   }
 
   //To check if user is connected to internet
-  static Future<bool> isNotConnected() async {
+  static Future<bool> isConnected() async {
     var connectivityResult = await (Connectivity().checkConnectivity());
-    return connectivityResult == ConnectivityResult.none;
+    if (connectivityResult == ConnectivityResult.none) {
+      toastMessage(msg: 'No internet connection');
+      return false;
+    }
+    return true;
   }
 
   static void showLoader(BuildContext context) {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:movieapp/provider/genre_provider.dart';
+import 'package:movieapp/provider/movie_provider.dart';
 import 'package:movieapp/provider/mqtt_provider.dart';
 import 'package:movieapp/provider/navbar_provider.dart';
 import 'package:movieapp/provider/search_provider.dart';
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
       onTap: (() => FocusScope.of(context).requestFocus(FocusNode())),
       child: MultiProvider(
         providers: [
+          ChangeNotifierProvider(create: (_) => MovieProvider()),
           ChangeNotifierProvider(create: (_) => GenreProvider()),
           ChangeNotifierProvider(create: (_) => SearchProvider()),
           ChangeNotifierProvider(create: (_) => NavBarProvider()),

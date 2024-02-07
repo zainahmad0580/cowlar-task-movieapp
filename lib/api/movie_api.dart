@@ -12,7 +12,7 @@ class MovieApi {
   static final _database = AppDatabase();
   static Future<List<MovieModel>> getAllMovies() async {
     try {
-      if (await Utils.isNotConnected()) {
+      if (!await Utils.isConnected()) {
         // Retrieve movies from the local database
         final List<MovieModel> movies = await _database.getAllMovies();
 
@@ -37,13 +37,14 @@ class MovieApi {
         // Insert fetched movies into the local database
         await _database.insertMovies(fetchedMovies);
         log('Geting all movies from api');
+        log('${fetchedMovies.length}');
         return fetchedMovies;
       } else if (response.statusCode == 401) {
         String? message = responseData['status_message'];
         Utils.toastMessage(msg: message ?? 'Unauthorized access');
       }
     } catch (e) {
-      Utils.toastMessage();
+      //Utils.toastMessage();
       log(e.toString());
     }
     return []; // Return an empty list if fetching or inserting movies fails

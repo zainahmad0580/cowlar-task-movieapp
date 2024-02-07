@@ -75,7 +75,7 @@ class AppDatabase extends _$AppDatabase {
         batch.insert(
             this.movies,
             MoviesCompanion(
-              id: Value(movie.id), // Assigning id at runtime
+              id: Value(movie.id!), // Assigning id at runtime
               title: Value(movie.title),
               backdropPath: Value(movie.backdropPath),
               originalTitle: Value(movie.originalTitle),
@@ -89,7 +89,7 @@ class AppDatabase extends _$AppDatabase {
               voteAverage: Value(movie.voteAverage),
               voteCount: Value(movie.voteCount),
             ),
-            InsertMode.insertOrReplace);
+            mode: InsertMode.insertOrReplace);
       }
     });
   }
