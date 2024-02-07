@@ -18,6 +18,7 @@ class _VideoScreenState extends State<VideoScreen> {
   void dispose() {
     super.dispose();
     _controller.dispose();
+
     //Switch back to portrait mode
     SystemChrome.setPreferredOrientations(<DeviceOrientation>[]);
   }
@@ -53,7 +54,7 @@ class _VideoScreenState extends State<VideoScreen> {
           controller: _controller,
           showVideoProgressIndicator: true,
           onEnded: (metaData) {
-            //Switch back to portrait mode
+            //Switch back to normal orientation
             SystemChrome.setPreferredOrientations(<DeviceOrientation>[]);
             //Go back to details screen after movie is completed
             Navigator.pop(context);
