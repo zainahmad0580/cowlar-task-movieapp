@@ -43,12 +43,7 @@ class MovieListScreen extends StatelessWidget {
                       itemCount: movies.length,
                       itemBuilder: ((context, index) {
                         final movie = movies[index];
-                        return Row(
-                          children: [
-                            Text('${index + 1}'),
-                            Expanded(child: MovieCard(movieModel: movie)),
-                          ],
-                        );
+                        return MovieCard(movieModel: movie);
                       }));
                 });
               }

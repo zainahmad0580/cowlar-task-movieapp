@@ -67,6 +67,37 @@ class AppDatabase extends _$AppDatabase {
         .get();
   }
 
+  // // Define a method to get a single movie from the database based on its id
+  // Future<MovieModel?> getMovie(int id) async {
+  //   log('Getting movie with id: $id from local db');
+  //   final result =
+  //       await (select(movies)..where((movie) => movie.id.equals(id))).get();
+
+  //   if (result.isNotEmpty) {
+  //     final row = result.first;
+  //     return MovieModel(
+  //       id: row.id,
+  //       title: row.title,
+  //       backdropPath: row.backdropPath,
+  //       originalTitle: row.originalTitle,
+  //       overview: row.overview,
+  //       popularity: row.popularity,
+  //       posterPath: row.posterPath,
+  //       releaseDate: row.releaseDate,
+  //       originalLanguage: row.originalLanguage,
+  //       adult: row.adult,
+  //       video: row.video,
+  //       voteAverage: row.voteAverage,
+  //       voteCount: row.voteCount,
+  //       genreIds: row.genreIds != null
+  //           ? List<int>.from(json.decode(row.genreIds ?? ''))
+  //           : null,
+  //     );
+  //   } else {
+  //     return null; // Return null if no movie with the given id is found
+  //   }
+  // }
+
   // Define a method to insert movies into the database
   Future<void> insertMovies(List<MovieModel> movies) async {
     log('Inserting all movies into local db');

@@ -10,6 +10,9 @@ class VideoApi {
   static Future<List<VideoModel>> getAllTrailerVideos(int movieId) async {
     List<VideoModel> videos = [];
     try {
+      //IF USER IS NOT CONNECTED TO THE INTERNET
+      if (!await Utils.isConnected()) return videos;
+
       final uri = Uri.parse('${ApiEndpoints.movieUrl}/$movieId/videos')
           .replace(queryParameters: {'api_key': apiKey});
       final response = await http.get(uri);
@@ -33,8 +36,11 @@ class VideoApi {
         Utils.toastMessage(msg: message ?? 'Unauthorized access');
       }
     } catch (e) {
-      Utils.toastMessage();
+      //Utils.toastMessage();
       log(e.toString());
+    }
+    if (videos.isEmpty) {
+      Utils.toastMessage(msg: 'Trailer not found');
     }
     return videos;
   }

@@ -13,8 +13,10 @@ class MovieCard extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, RouteNames.movieDetail,
-          arguments: movieModel.id),
+      onTap: () {
+        Navigator.pushNamed(context, RouteNames.movieDetail,
+            arguments: movieModel);
+      },
       child: Container(
         margin: EdgeInsets.symmetric(vertical: size.height * 0.02),
         padding:

@@ -12,6 +12,7 @@ class MovieApi {
   static final _database = AppDatabase();
   static Future<List<MovieModel>> getAllMovies() async {
     try {
+      //IF USER IS NOT CONNECTED TO THE INTERNET
       if (!await Utils.isConnected()) {
         // Retrieve movies from the local database
         final List<MovieModel> movies = await _database.getAllMovies();
@@ -73,7 +74,7 @@ class MovieApi {
         Utils.toastMessage(msg: message ?? 'Unauthorized access');
       }
     } catch (e) {
-      Utils.toastMessage();
+      //Utils.toastMessage();
       log(e.toString());
     }
     return movies;
@@ -82,6 +83,9 @@ class MovieApi {
   static Future<MovieDetailsModel?> getMovieDetails(int movieId) async {
     MovieDetailsModel? movieDetailsModel;
     try {
+      //IF USER IS NOT CONNECTED TO THE INTERNET
+      if (!await Utils.isConnected()) return movieDetailsModel;
+
       final uri = Uri.parse('${ApiEndpoints.movieUrl}/$movieId')
           .replace(queryParameters: {'api_key': apiKey});
       final response = await http.get(uri);
@@ -96,7 +100,7 @@ class MovieApi {
         Utils.toastMessage(msg: message ?? 'Unauthorized access');
       }
     } catch (e) {
-      Utils.toastMessage();
+      //Utils.toastMessage();
       log(e.toString());
     }
     return movieDetailsModel;

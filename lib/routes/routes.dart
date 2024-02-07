@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movieapp/model/movie_model.dart';
 import 'package:movieapp/routes/route_names.dart';
 import 'package:movieapp/view/screens/genre/screens/search_results_screen.dart';
 import 'package:movieapp/view/screens/home/screens/home_screen.dart';
@@ -18,7 +19,7 @@ class Routes {
         return MaterialPageRoute(builder: (_) => const MovieListScreen());
       case RouteNames.movieDetail:
         return MaterialPageRoute(
-            builder: (_) => MovieDetailScreen(movieId: args as int));
+            builder: (_) => MovieDetailScreen(movieModel: args as MovieModel));
       case RouteNames.genreList:
         return MaterialPageRoute(builder: (_) => const GenreListScreen());
       case RouteNames.video:
