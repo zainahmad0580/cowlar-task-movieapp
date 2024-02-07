@@ -15,39 +15,40 @@ class MovieListScreen extends StatelessWidget {
     var size = MediaQuery.of(context).size;
     return RefreshIndicator(
       onRefresh: () async => await movieProvider.setMovies(),
-      child: SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        child: FutureBuilder(
-            future: movieProvider.setMovies(),
-            builder: (context, snapshot) {
-              log('Inside future builder');
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return ShimmerCardEffect(
-                    items: 4,
-                    height: size.height * 0.25,
-                    width: size.width * 0.9);
-              } else if (snapshot.hasError) {
-                return const Icon(Icons.error);
-              } else {
-                return Consumer<MovieProvider>(
-                    builder: (context, value, child) {
-                  List<MovieModel> movies = value.movies;
+      child: ListView(
+        children: [
+          FutureBuilder(
+              future: movieProvider.setMovies(),
+              builder: (context, snapshot) {
+                log('Inside future builder');
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return ShimmerCardEffect(
+                      items: 4,
+                      height: size.height * 0.25,
+                      width: size.width * 0.9);
+                } else if (snapshot.hasError) {
+                  return const Icon(Icons.error);
+                } else {
+                  return Consumer<MovieProvider>(
+                      builder: (context, value, child) {
+                    List<MovieModel> movies = value.movies;
 
-                  if (movies.isEmpty) {
-                    return const Text('No movie found');
-                  }
+                    if (movies.isEmpty) {
+                      return const Text('No movie found');
+                    }
 
-                  return ListView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: movies.length,
-                      itemBuilder: ((context, index) {
-                        final movie = movies[index];
-                        return MovieCard(movieModel: movie);
-                      }));
-                });
-              }
-            }),
+                    return ListView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: movies.length,
+                        itemBuilder: ((context, index) {
+                          final movie = movies[index];
+                          return MovieCard(movieModel: movie);
+                        }));
+                  });
+                }
+              }),
+        ],
       ),
     );
   }
