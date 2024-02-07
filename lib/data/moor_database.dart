@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:moor_flutter/moor_flutter.dart';
+import 'package:movieapp/model/genre_model.dart';
 import 'package:movieapp/model/movie_model.dart';
 
 // Moor works by source gen. This file will contain all the generated code.
@@ -28,9 +29,22 @@ class Movies extends Table {
   Set<Column> get primaryKey => {id}; // Set id as the primary key
 }
 
+// Define a table for genres
+class Genres extends Table {
+  IntColumn get id => integer()();
+  TextColumn get name => text().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
 // Define the database class
-@UseMoor(tables: [Movies])
+@UseMoor(tables: [Movies, Genres])
 class AppDatabase extends _$AppDatabase {
+  //ONLY 1 INSTANCE MUST BE USED TTHROUGH OUT THE APP TO AVOID MULTIPLE DATABASES BEING CREATED AND RACE CONDITIONS
+  static final AppDatabase _instance = AppDatabase();
+
+  static AppDatabase get instance => _instance;
   AppDatabase()
       // Specify the location of the database file
       : super((FlutterQueryExecutor.inDatabaseFolder(
@@ -47,56 +61,24 @@ class AppDatabase extends _$AppDatabase {
     log('Getting all movies from local db');
     return select(movies)
         .map((row) => MovieModel(
-              id: row.id,
-              title: row.title,
-              backdropPath: row.backdropPath,
-              originalTitle: row.originalTitle,
-              overview: row.overview,
-              popularity: row.popularity,
-              posterPath: row.posterPath,
-              releaseDate: row.releaseDate,
-              originalLanguage: row.originalLanguage,
-              adult: row.adult,
-              video: row.video,
-              voteAverage: row.voteAverage,
-              voteCount: row.voteCount,
-              genreIds: row.genreIds != null
-                  ? List<int>.from(json.decode(row.genreIds ?? ''))
-                  : null,
-            ))
+            id: row.id,
+            title: row.title,
+            backdropPath: row.backdropPath,
+            originalTitle: row.originalTitle,
+            overview: row.overview,
+            popularity: row.popularity,
+            posterPath: row.posterPath,
+            releaseDate: row.releaseDate,
+            originalLanguage: row.originalLanguage,
+            adult: row.adult,
+            video: row.video,
+            voteAverage: row.voteAverage,
+            voteCount: row.voteCount,
+            genreIds: row.genreIds != null
+                ? List<int>.from(json.decode(row.genreIds ?? ''))
+                : null))
         .get();
   }
-
-  // // Define a method to get a single movie from the database based on its id
-  // Future<MovieModel?> getMovie(int id) async {
-  //   log('Getting movie with id: $id from local db');
-  //   final result =
-  //       await (select(movies)..where((movie) => movie.id.equals(id))).get();
-
-  //   if (result.isNotEmpty) {
-  //     final row = result.first;
-  //     return MovieModel(
-  //       id: row.id,
-  //       title: row.title,
-  //       backdropPath: row.backdropPath,
-  //       originalTitle: row.originalTitle,
-  //       overview: row.overview,
-  //       popularity: row.popularity,
-  //       posterPath: row.posterPath,
-  //       releaseDate: row.releaseDate,
-  //       originalLanguage: row.originalLanguage,
-  //       adult: row.adult,
-  //       video: row.video,
-  //       voteAverage: row.voteAverage,
-  //       voteCount: row.voteCount,
-  //       genreIds: row.genreIds != null
-  //           ? List<int>.from(json.decode(row.genreIds ?? ''))
-  //           : null,
-  //     );
-  //   } else {
-  //     return null; // Return null if no movie with the given id is found
-  //   }
-  // }
 
   // Define a method to insert movies into the database
   Future<void> insertMovies(List<MovieModel> movies) async {
@@ -106,20 +88,38 @@ class AppDatabase extends _$AppDatabase {
         batch.insert(
             this.movies,
             MoviesCompanion(
-              id: Value(movie.id!), // Assigning id at runtime
-              title: Value(movie.title),
-              backdropPath: Value(movie.backdropPath),
-              originalTitle: Value(movie.originalTitle),
-              overview: Value(movie.overview),
-              popularity: Value(movie.popularity),
-              posterPath: Value(movie.posterPath),
-              releaseDate: Value(movie.releaseDate),
-              originalLanguage: Value(movie.originalLanguage),
-              adult: Value(movie.adult),
-              video: Value(movie.video),
-              voteAverage: Value(movie.voteAverage),
-              voteCount: Value(movie.voteCount),
-            ),
+                id: Value(movie.id!), // Assigning id at runtime
+                title: Value(movie.title),
+                backdropPath: Value(movie.backdropPath),
+                originalTitle: Value(movie.originalTitle),
+                overview: Value(movie.overview),
+                popularity: Value(movie.popularity),
+                posterPath: Value(movie.posterPath),
+                releaseDate: Value(movie.releaseDate),
+                originalLanguage: Value(movie.originalLanguage),
+                adult: Value(movie.adult),
+                video: Value(movie.video),
+                voteAverage: Value(movie.voteAverage),
+                voteCount: Value(movie.voteCount)),
+            mode: InsertMode.insertOrReplace);
+      }
+    });
+  }
+
+  // Define a method to get the genres from the database
+  Future<List<GenreModel>> getAllGenres() async {
+    log('Getting all genres from local db');
+    return select(genres)
+        .map((row) => GenreModel(id: row.id, name: row.name))
+        .get();
+  }
+
+  Future<void> insertGenres(List<GenreModel> genres) async {
+    log('Inserting all genres into local db');
+    batch((batch) {
+      for (var genre in genres) {
+        batch.insert(this.genres,
+            GenresCompanion(id: Value(genre.id!), name: Value(genre.name)),
             mode: InsertMode.insertOrReplace);
       }
     });

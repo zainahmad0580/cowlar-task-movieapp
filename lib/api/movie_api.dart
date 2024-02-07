@@ -9,46 +9,40 @@ import 'package:movieapp/utils/constants.dart';
 import 'package:movieapp/utils/utils.dart';
 
 class MovieApi {
-  static final _database = AppDatabase();
+  static final _database = AppDatabase.instance;
   static Future<List<MovieModel>> getAllMovies() async {
+    List<MovieModel> movies = [];
     try {
       //IF USER IS NOT CONNECTED TO THE INTERNET
       if (!await Utils.isConnected()) {
         // Retrieve movies from the local database
-        final List<MovieModel> movies = await _database.getAllMovies();
+        movies = await _database.getAllMovies();
+      } else {
+        // If no movies are found in the database, fetch them from the api
+        final uri = Uri.parse(ApiEndpoints.moviesList)
+            .replace(queryParameters: {'api_key': apiKey});
+        final response = await http.get(uri);
 
-        // If movies exist in the database, return them
-        if (movies.isNotEmpty) {
-          return movies;
+        final responseData = jsonDecode(response.body);
+        if (response.statusCode == 200 && responseData['results'] != null) {
+          final data = responseData['results'];
+          movies = data
+              .map<MovieModel>((movie) => MovieModel.fromJson(movie))
+              .toList();
+
+          // Insert fetched movies into the local database
+          await _database.insertMovies(movies);
+          log('Geting all movies from api');
+          log('${movies.length}');
+        } else if (response.statusCode == 401) {
+          String? message = responseData['status_message'];
+          Utils.toastMessage(msg: message ?? 'Unauthorized access');
         }
       }
-
-      // If no movies are found in the database, fetch them from the api
-      final uri = Uri.parse(ApiEndpoints.moviesList)
-          .replace(queryParameters: {'api_key': apiKey});
-      final response = await http.get(uri);
-
-      final responseData = jsonDecode(response.body);
-      if (response.statusCode == 200 && responseData['results'] != null) {
-        final data = responseData['results'];
-        final List<MovieModel> fetchedMovies = data
-            .map<MovieModel>((movie) => MovieModel.fromJson(movie))
-            .toList();
-
-        // Insert fetched movies into the local database
-        await _database.insertMovies(fetchedMovies);
-        log('Geting all movies from api');
-        log('${fetchedMovies.length}');
-        return fetchedMovies;
-      } else if (response.statusCode == 401) {
-        String? message = responseData['status_message'];
-        Utils.toastMessage(msg: message ?? 'Unauthorized access');
-      }
     } catch (e) {
-      //Utils.toastMessage();
       log(e.toString());
     }
-    return []; // Return an empty list if fetching or inserting movies fails
+    return movies;
   }
 
   static Future<List<MovieModel>> searchMovies(String query) async {
@@ -74,7 +68,6 @@ class MovieApi {
         Utils.toastMessage(msg: message ?? 'Unauthorized access');
       }
     } catch (e) {
-      //Utils.toastMessage();
       log(e.toString());
     }
     return movies;
@@ -100,7 +93,6 @@ class MovieApi {
         Utils.toastMessage(msg: message ?? 'Unauthorized access');
       }
     } catch (e) {
-      //Utils.toastMessage();
       log(e.toString());
     }
     return movieDetailsModel;

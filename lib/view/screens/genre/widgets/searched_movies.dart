@@ -17,22 +17,21 @@ class SearchedMovies extends StatelessWidget {
           const Text('Top Results', style: ThemeText.blacktext16),
           const Divider(),
         ],
-        Expanded(
-          child: Consumer<SearchProvider>(
-            builder: (context, searchProvider, child) {
-              return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: searchProvider.searchedMovies.length,
-                  itemBuilder: (context, index) {
-                    final searchedMovie = searchProvider.searchedMovies[index];
+        Consumer<SearchProvider>(
+          builder: (context, searchProvider, child) {
+            return ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: searchProvider.searchedMovies.length,
+                itemBuilder: (context, index) {
+                  final searchedMovie = searchProvider.searchedMovies[index];
 
-                    return SearchedMovieListTile(
-                        posterUrl: searchedMovie.backdropPath!,
-                        title: searchedMovie.title!,
-                        genreIds: searchedMovie.genreIds!);
-                  });
-            },
-          ),
+                  return SearchedMovieListTile(
+                      posterUrl: searchedMovie.backdropPath!,
+                      title: searchedMovie.title!,
+                      genreIds: searchedMovie.genreIds!);
+                });
+          },
         )
       ],
     );

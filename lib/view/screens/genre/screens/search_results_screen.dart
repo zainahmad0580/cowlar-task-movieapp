@@ -41,26 +41,24 @@ class SearchResultsScreen extends StatelessWidget {
                 style: ThemeText.appBarBlack)),
         bottomNavigationBar: const CustomNavBar(),
         backgroundColor: AppColors.white,
-        body: SafeArea(
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: size.height * 0.02),
-            child: Consumer<NavBarProvider>(builder: (context, navbar, child) {
-              return IndexedStack(index: navbar.index, children: [
-                const DashboardScreen(),
-                Column(children: [
-                  Expanded(
-                      child: Container(
-                          color: AppColors.lightGreyBg,
-                          padding: EdgeInsets.symmetric(
-                              horizontal: size.width * 0.04,
-                              vertical: size.height * 0.03),
-                          child: const SearchedMovies(showListOnly: true)))
-                ]),
-                const MediaLibraryScreen(),
-                const MoreScreen()
-              ]);
-            }),
-          ),
+        body: Padding(
+          padding: EdgeInsets.symmetric(vertical: size.height * 0.02),
+          child: Consumer<NavBarProvider>(builder: (context, navbar, child) {
+            return IndexedStack(index: navbar.index, children: [
+              const DashboardScreen(),
+              SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: Container(
+                    color: AppColors.lightGreyBg,
+                    padding: EdgeInsets.symmetric(
+                        horizontal: size.width * 0.04,
+                        vertical: size.height * 0.03),
+                    child: const SearchedMovies(showListOnly: true)),
+              ),
+              const MediaLibraryScreen(),
+              const MoreScreen()
+            ]);
+          }),
         ),
       ),
     );
