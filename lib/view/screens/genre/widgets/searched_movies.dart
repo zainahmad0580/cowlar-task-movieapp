@@ -19,6 +19,9 @@ class SearchedMovies extends StatelessWidget {
         ],
         Consumer<SearchProvider>(
           builder: (context, searchProvider, child) {
+            if (searchProvider.searchedMovies.isEmpty) {
+              return const Text('No movie found');
+            }
             return ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,

@@ -10,7 +10,7 @@ part 'moor_database.g.dart';
 
 // Define a table for movies
 class Movies extends Table {
-  IntColumn get id => integer()(); // Modify to remove autoIncrement
+  IntColumn get id => integer()();
   TextColumn get title => text().nullable()();
   TextColumn get backdropPath => text().nullable()();
   TextColumn get originalTitle => text().nullable()();
@@ -41,22 +41,21 @@ class Genres extends Table {
 // Define the database class
 @UseMoor(tables: [Movies, Genres])
 class AppDatabase extends _$AppDatabase {
-  //ONLY 1 INSTANCE MUST BE USED TTHROUGH OUT THE APP TO AVOID MULTIPLE DATABASES BEING CREATED AND RACE CONDITIONS
+  //ONLY 1 INSTANCE MUST BE USED TTHROUGH OUT THE APP TO AVOID MULTIPLE DATABASES BEING CREATED AND FALLING INTO THE RACE CONDITION
   static final AppDatabase _instance = AppDatabase();
 
   static AppDatabase get instance => _instance;
   AppDatabase()
       // Specify the location of the database file
       : super((FlutterQueryExecutor.inDatabaseFolder(
-          path: 'db.sqlite',
-          // Good for debugging - prints SQL in the console
-          logStatements: true,
-        )));
+            path: 'db.sqlite',
+            // Good for debugging - prints SQL in the console
+            logStatements: true)));
 
   @override
   int get schemaVersion => 1;
 
-  // Define a method to get the movies from the database
+  //Method to get the movies from the database
   Future<List<MovieModel>> getAllMovies() async {
     log('Getting all movies from local db');
     return select(movies)
@@ -80,7 +79,7 @@ class AppDatabase extends _$AppDatabase {
         .get();
   }
 
-  // Define a method to insert movies into the database
+  //Method to insert movies into the database
   Future<void> insertMovies(List<MovieModel> movies) async {
     log('Inserting all movies into local db');
     batch((batch) {

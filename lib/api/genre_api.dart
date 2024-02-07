@@ -32,7 +32,7 @@ class GenreApi {
               .map<GenreModel>((genre) => GenreModel.fromJson(genre))
               .toList();
 
-          // Insert fetched movies into the local database
+          // Insert fetched genres into the local database
           await _database.insertGenres(genres);
           log('Geting all genres from api');
           log('${genres.length}');
