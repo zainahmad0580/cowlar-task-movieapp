@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:movieapp/mqtt/mqtt_client.dart';
 import 'package:movieapp/provider/mqtt_provider.dart';
+import 'package:movieapp/utils/app_colors.dart';
+import 'package:movieapp/utils/constants.dart';
 import 'package:movieapp/utils/styles.dart';
 import 'package:movieapp/utils/utils.dart';
 import 'package:movieapp/view/widgets/custom_text_field.dart';
@@ -17,8 +19,8 @@ class MQTTScreen extends StatefulWidget {
 class _MQTTScreenState extends State<MQTTScreen> {
   final TextEditingController _topicController = TextEditingController();
   final TextEditingController _messageController = TextEditingController();
-  late MQTTProvider currentAppState;
-  late MQTT client;
+
+  MQTT? client;
 
   @override
   void dispose() {
@@ -30,89 +32,112 @@ class _MQTTScreenState extends State<MQTTScreen> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    final MQTTProvider appState = Provider.of<MQTTProvider>(context);
-    // Keep a listening to the app state.
-    currentAppState = appState;
+
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.symmetric(
             vertical: size.height * 0.02, horizontal: size.width * 0.03),
         child: SingleChildScrollView(
-          child: Column(children: [
-            const Text('MQTT', style: ThemeText.appBarBlack),
-            SizedBox(height: size.height * 0.03),
-            CustomTextField(
-                controller: _topicController,
-                keyboardType: TextInputType.name,
-                hintText: 'Enter Topic',
-                labelText: 'Topic'),
-            SizedBox(height: size.height * 0.01),
-            RoundButton(
-                title: 'Connect & Subscribe',
-                onPress: () async {
-                  Utils.showLoader(context);
-                  if (await Utils.isConnected()) if (_topicController
-                      .text.isNotEmpty) {
-                    _configureAndConnect();
-                  } else {
-                    Utils.toastMessage(msg: 'Please enter a topic');
-                  }
-                  Utils.hideLoader(context);
-                }),
-            SizedBox(height: size.height * 0.01),
-            RoundButton(
-                title: 'Disconnect',
-                onPress: () {
-                  Utils.showLoader(context);
-                  _disconnect();
-                  Utils.hideLoader(context);
-                }),
-            SizedBox(height: size.height * 0.03),
-            CustomTextField(
-                controller: _messageController,
-                keyboardType: TextInputType.name,
-                hintText: 'Enter Message',
-                labelText: 'Message'),
-            SizedBox(height: size.height * 0.01),
-            RoundButton(
-                title: 'Publish Message',
-                onPress: () async {
-                  Utils.showLoader(context);
-                  if (await Utils.isConnected()) {
-                    if (_messageController.text.isNotEmpty) {
-                      _publishMessage(_messageController.text.trim());
+          child:
+              Consumer<MQTTProvider>(builder: (context, mqttProvider, child) {
+            return Column(children: [
+              const Text('MQTT', style: ThemeText.appBarBlack),
+              SizedBox(height: size.height * 0.03),
+              CustomTextField(
+                  controller: _topicController,
+                  keyboardType: TextInputType.name,
+                  hintText: 'Enter Topic',
+                  labelText: 'Topic'),
+              SizedBox(height: size.height * 0.01),
+              RoundButton(
+                  btnColor: mqttProvider.getAppConnectionState ==
+                          MQTTAppConnectionState.connected
+                      ? AppColors.greyText
+                      : AppColors.btn,
+                  title: 'Connect & Subscribe',
+                  onPress: () async {
+                    if (mqttProvider.getAppConnectionState ==
+                        MQTTAppConnectionState.disconnected) {
+                      Utils.showLoader(context);
+                      if (await Utils.isConnected()) {
+                        if (_topicController.text.isNotEmpty) {
+                          client = MQTT(
+                              topic: _topicController.text,
+                              state: mqttProvider);
+                          client!.initializeMQTTClient();
+                          client!.connect();
+                          _topicController.clear();
+                        } else {
+                          Utils.toastMessage(msg: 'Please enter a topic');
+                        }
+                      }
+                      Utils.hideLoader(context);
                     } else {
-                      Utils.toastMessage(msg: 'Please enter a message');
+                      Utils.toastMessage(msg: 'You need to disconnect first');
                     }
-                  }
-                  Utils.hideLoader(context);
-                }),
-            SizedBox(height: size.height * 0.01),
-            Consumer<MQTTProvider>(
-              builder: (context, value, child) {
-                return Text('Published Messages: ${value.getHistoryText}');
-              },
-            )
-          ]),
+                  }),
+              SizedBox(height: size.height * 0.01),
+              RoundButton(
+                  btnColor: mqttProvider.getAppConnectionState ==
+                          MQTTAppConnectionState.connected
+                      ? AppColors.btn
+                      : AppColors.greyText,
+                  title: 'Disconnect',
+                  onPress: () {
+                    if (mqttProvider.getAppConnectionState ==
+                        MQTTAppConnectionState.connected) {
+                      Utils.showLoader(context);
+                      client == null
+                          ? Utils.toastMessage(msg: 'Please connect first')
+                          : client!.disconnect();
+                      mqttProvider.clearHistory();
+                      Utils.hideLoader(context);
+                    } else {
+                      Utils.toastMessage(msg: 'Please connect first');
+                    }
+                  }),
+              SizedBox(height: size.height * 0.03),
+              CustomTextField(
+                  controller: _messageController,
+                  keyboardType: TextInputType.name,
+                  hintText: 'Enter Message',
+                  labelText: 'Message'),
+              SizedBox(height: size.height * 0.01),
+              RoundButton(
+                  btnColor: mqttProvider.getAppConnectionState ==
+                          MQTTAppConnectionState.connected
+                      ? AppColors.btn
+                      : AppColors.greyText,
+                  title: 'Publish Message',
+                  onPress: () async {
+                    if (mqttProvider.getAppConnectionState ==
+                        MQTTAppConnectionState.connected) {
+                      Utils.showLoader(context);
+                      if (await Utils.isConnected()) {
+                        if (_messageController.text.isNotEmpty) {
+                          final String message =
+                              'Zain says: ${_messageController.text.trim()}';
+                          client!.publish(message);
+                          _messageController.clear();
+                        } else {
+                          Utils.toastMessage(msg: 'Please enter a message');
+                        }
+                      }
+                      Utils.hideLoader(context);
+                    } else {
+                      Utils.toastMessage(msg: 'Please connect first');
+                    }
+                  }),
+              SizedBox(height: size.height * 0.01),
+              Consumer<MQTTProvider>(
+                builder: (context, value, child) {
+                  return Text('Published Messages: ${value.getHistoryText}');
+                },
+              )
+            ]);
+          }),
         ),
       ),
     );
-  }
-
-  void _configureAndConnect() {
-    client = MQTT(topic: _topicController.text, state: currentAppState);
-    client.initializeMQTTClient();
-    client.connect();
-    _topicController.clear();
-  }
-
-  void _disconnect() {
-    client.disconnect();
-  }
-
-  void _publishMessage(String text) {
-    final String message = 'Zain says: $text';
-    client.publish(message);
-    _messageController.clear();
   }
 }

@@ -7,9 +7,19 @@ class MQTTProvider with ChangeNotifier {
   String _receivedText = '';
   String _historyText = '';
 
+  String get getReceivedText => _receivedText;
+  String get getHistoryText => _historyText;
+  MQTTAppConnectionState get getAppConnectionState => _appConnectionState;
+
   void setReceivedText(String text) {
     _receivedText = text;
     _historyText = '$_historyText\n$_receivedText';
+    notifyListeners();
+  }
+
+  void clearHistory() {
+    _receivedText = '';
+    _historyText = '';
     notifyListeners();
   }
 
@@ -17,8 +27,4 @@ class MQTTProvider with ChangeNotifier {
     _appConnectionState = state;
     notifyListeners();
   }
-
-  String get getReceivedText => _receivedText;
-  String get getHistoryText => _historyText;
-  MQTTAppConnectionState get getAppConnectionState => _appConnectionState;
 }
