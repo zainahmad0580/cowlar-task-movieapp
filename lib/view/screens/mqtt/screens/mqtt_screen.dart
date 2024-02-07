@@ -49,15 +49,24 @@ class _MQTTScreenState extends State<MQTTScreen> {
             SizedBox(height: size.height * 0.01),
             RoundButton(
                 title: 'Connect & Subscribe',
-                onPress: () {
-                  if (_topicController.text.isNotEmpty) {
+                onPress: () async {
+                  Utils.showLoader(context);
+                  if (await Utils.isConnected()) if (_topicController
+                      .text.isNotEmpty) {
                     _configureAndConnect();
                   } else {
                     Utils.toastMessage(msg: 'Please enter a topic');
                   }
+                  Utils.hideLoader(context);
                 }),
             SizedBox(height: size.height * 0.01),
-            RoundButton(title: 'Disconnect', onPress: () => _disconnect()),
+            RoundButton(
+                title: 'Disconnect',
+                onPress: () {
+                  Utils.showLoader(context);
+                  _disconnect();
+                  Utils.hideLoader(context);
+                }),
             SizedBox(height: size.height * 0.03),
             CustomTextField(
                 controller: _messageController,
@@ -67,12 +76,16 @@ class _MQTTScreenState extends State<MQTTScreen> {
             SizedBox(height: size.height * 0.01),
             RoundButton(
                 title: 'Publish Message',
-                onPress: () {
-                  if (_messageController.text.isNotEmpty) {
-                    _publishMessage(_messageController.text.trim());
-                  } else {
-                    Utils.toastMessage(msg: 'Please enter a message');
+                onPress: () async {
+                  Utils.showLoader(context);
+                  if (await Utils.isConnected()) {
+                    if (_messageController.text.isNotEmpty) {
+                      _publishMessage(_messageController.text.trim());
+                    } else {
+                      Utils.toastMessage(msg: 'Please enter a message');
+                    }
                   }
+                  Utils.hideLoader(context);
                 }),
             SizedBox(height: size.height * 0.01),
             Consumer<MQTTProvider>(
