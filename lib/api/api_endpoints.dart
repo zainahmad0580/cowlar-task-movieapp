@@ -1,15 +1,14 @@
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:movieapp/utils/config.dart';
 
 class ApiEndpoints {
   //================BASE URLS================
-  static String baseUrl = dotenv.get('BASE_URL', fallback: '');
-
-  //To get image with width=500
-  static String storageUrlw500 = dotenv.get('STORAGE_URL_W500', fallback: '');
+  static String baseUrl = Config.baseUrl;
 
   //To get image with it's original size
-  static String storageUrlOriginal =
-      dotenv.get('STORAGE_URL_ORIGINAL', fallback: '');
+  static String storageUrlOriginal = Config.storageUrlOriginal;
+
+  //To get image with width=500
+  static String storageUrlw500 = Config.storageUrlw500;
 
   //================MOVIES================
   static String moviesList = '$baseUrl/movie/upcoming'; //List of movies
