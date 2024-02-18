@@ -12,6 +12,8 @@ class MQTT {
   final String _identifier = 'Zain';
   final String _topic;
 
+  MqttServerClient? get client => _client;
+
   MQTT({required String topic, required MQTTProvider state})
       : _topic = topic,
         _currentState = state;
@@ -38,6 +40,10 @@ class MQTT {
 
     log('EXAMPLE::Mosquitto client connecting....');
     _client!.connectionMessage = connMess;
+  }
+
+  void setClient(MqttServerClient client) {
+    _client = client;
   }
 
   // Connect to the broker
